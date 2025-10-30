@@ -13,7 +13,11 @@ class XemController extends Controller
     {
         try {
             // Lấy thông tin episode
-            $response = Http::get("{$this->apiBaseUrl}/product/{$episodeSlug}");
+            $response = Http::timeout(10)
+                ->withHeaders(['Cache-Control' => 'no-cache'])
+                ->get("{$this->apiBaseUrl}/product/{$episodeSlug}", [
+                    '_t' => time(), // Cache buster
+                ]);
             
             if (!$response->successful()) {
                 return redirect('/')->with('error', 'Không tìm thấy tập phim');
@@ -23,10 +27,13 @@ class XemController extends Controller
             $category = $episode['category'] ?? null;
 
             // Lấy danh sách xem nhiều cho sidebar
-            $popularResponse = Http::get("{$this->apiBaseUrl}/category/filters", [
-                'width' => 300,
-                'height' => 400,
-            ]);
+            $popularResponse = Http::timeout(10)
+                ->withHeaders(['Cache-Control' => 'no-cache'])
+                ->get("{$this->apiBaseUrl}/category/filters", [
+                    'width' => 300,
+                    'height' => 400,
+                    '_t' => time(), // Cache buster
+                ]);
 
             $popularCategories = $popularResponse->successful() ? $popularResponse->json() : [];
 

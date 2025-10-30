@@ -41,15 +41,22 @@ fi
 # php artisan migrate --force --no-interaction || echo "Migration failed, continuing..."
 
 # Clear and cache config
-echo "Clearing Laravel caches..."
+echo "========================================="
+echo "Clearing ALL caches (config, view, route, app cache)..."
+echo "========================================="
 php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
+php artisan route:clear
 
+echo "========================================="
 echo "Caching Laravel configurations..."
-php artisan config:cache || echo "Config cache failed, continuing..."
-php artisan route:cache || echo "Route cache failed, continuing..."
-php artisan view:cache || echo "View cache failed, continuing..."
+echo "========================================="
+php artisan config:cache || echo "⚠️  Config cache failed, continuing..."
+php artisan route:cache || echo "⚠️  Route cache failed, continuing..."
+php artisan view:cache || echo "⚠️  View cache failed, continuing..."
+
+echo "✅ Cache operations completed!"
 
 # Test PHP-FPM configuration
 echo "Testing PHP-FPM configuration..."

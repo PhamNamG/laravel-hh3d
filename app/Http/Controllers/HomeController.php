@@ -13,17 +13,24 @@ class HomeController extends Controller
     {
         try {
             // Lấy danh sách categories mới cập nhật
-            $response = Http::get("{$this->apiBaseUrl}/categorys", [
-                'page' => 1,
-            ]);
+            // Thêm timestamp để bypass cache
+            $response = Http::timeout(10)
+                ->withHeaders(['Cache-Control' => 'no-cache'])
+                ->get("{$this->apiBaseUrl}/categorys", [
+                    'page' => 1,
+                    '_t' => time(), // Cache buster
+                ]);
 
             $categories = $response->successful() ? $response->json() : [];
 
             // Lấy danh sách xem nhiều (có thể từ endpoint khác)
-            $popularResponse = Http::get("{$this->apiBaseUrl}/category/filters", [
-                'width' => 300,
-                'height' => 400,
-            ]);
+            $popularResponse = Http::timeout(10)
+                ->withHeaders(['Cache-Control' => 'no-cache'])
+                ->get("{$this->apiBaseUrl}/category/filters", [
+                    'width' => 300,
+                    'height' => 400,
+                    '_t' => time(), // Cache buster
+                ]);
 
             $popularCategories = $popularResponse->successful() ? $popularResponse->json() : [];
 

@@ -13,7 +13,11 @@ class PhimController extends Controller
     {
         try {
             // Lấy chi tiết category/phim
-            $response = Http::get("{$this->apiBaseUrl}/category/{$slug}");
+            $response = Http::timeout(10)
+                ->withHeaders(['Cache-Control' => 'no-cache'])
+                ->get("{$this->apiBaseUrl}/category/{$slug}", [
+                    '_t' => time(), // Cache buster
+                ]);
             
             if (!$response->successful()) {
                 return redirect('/')->with('error', 'Không tìm thấy phim');
@@ -22,10 +26,13 @@ class PhimController extends Controller
             $phim = $response->json();
 
             // Lấy danh sách xem nhiều cho sidebar
-            $popularResponse = Http::get("{$this->apiBaseUrl}/category/filters", [
-                'width' => 300,
-                'height' => 400,
-            ]);
+            $popularResponse = Http::timeout(10)
+                ->withHeaders(['Cache-Control' => 'no-cache'])
+                ->get("{$this->apiBaseUrl}/category/filters", [
+                    'width' => 300,
+                    'height' => 400,
+                    '_t' => time(), // Cache buster
+                ]);
 
             $popularCategories = $popularResponse->successful() ? $popularResponse->json() : [];
 
