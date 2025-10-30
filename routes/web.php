@@ -17,16 +17,24 @@ use App\Http\Controllers\HomeController;
 // Trang chủ
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Search
+Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
+
 // Phim routes
 Route::get('/phim/{slug}', [App\Http\Controllers\PhimController::class, 'show'])->name('phim');
 
 // Xem phim
 Route::get('/xem/{categorySlug}/{episodeSlug}', [App\Http\Controllers\XemController::class, 'show'])->name('xem');
 
-// API routes for sidebar
+// API routes
 Route::prefix('api')->group(function () {
+    // Sidebar
     Route::get('/sidebar/popular', [App\Http\Controllers\SidebarController::class, 'getPopularMovies'])->name('api.sidebar.popular');
     Route::post('/sidebar/clear-cache', [App\Http\Controllers\SidebarController::class, 'clearCache'])->name('api.sidebar.clear-cache');
+    
+    // Week Schedule
+    Route::get('/week', [App\Http\Controllers\WeekController::class, 'getByWeek'])->name('api.week');
+    Route::post('/week/clear-cache', [App\Http\Controllers\WeekController::class, 'clearCache'])->name('api.week.clear-cache');
 });
 
 // Sitemap

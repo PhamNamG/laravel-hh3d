@@ -20,42 +20,44 @@
 
 @push('structured_data')
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Movie",
-  "name": "{{ $phim['name'] ?? 'Phim' }}",
-  "alternateName": "{{ $phim['anotherName'] ?? '' }}",
-  "description": "{{ isset($phim['des']) ? Str::limit($phim['des'], 200) : '' }}",
-  "image": "{{ $phim['linkImg'] ?? '' }}",
-  "url": "{{ url('/phim/' . ($phim['slug'] ?? '')) }}",
-  @if(isset($phim['year']))
-  "datePublished": "{{ $phim['year'] }}",
-  @endif
-  @if(isset($phim['rating']) && count($phim['rating']) > 0)
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "{{ number_format(array_sum($phim['rating']) / count($phim['rating']), 1) }}",
-    "ratingCount": "{{ count($phim['rating']) }}",
-    "bestRating": "5",
-    "worstRating": "1"
-  },
-  @endif
-  "genre": [
-    @if(isset($phim['tags']))
-      @foreach($phim['tags'] as $index => $tag)
-        "{{ $tag['name'] ?? '' }}"{{ $index < count($phim['tags']) - 1 ? ',' : '' }}
-      @endforeach
-    @endif
-  ],
-  @if(isset($phim['time']))
-  "duration": "PT{{ $phim['time'] }}",
-  @endif
-  "inLanguage": "{{ $phim['lang'] ?? 'vi' }}",
-  "countryOfOrigin": {
-    "@type": "Country",
-    "name": "{{ $phim['country'] ?? 'Trung Quốc' }}"
-  }
-}
+	{
+		"@context": "https://schema.org",
+		"@type": "Movie",
+		"name": "{{ $phim['name'] ?? 'Phim' }}",
+		"alternateName": "{{ $phim['anotherName'] ?? '' }}",
+		"description": "{{ isset($phim['des']) ? Str::limit($phim['des'], 200) : '' }}",
+		"image": "{{ $phim['linkImg'] ?? '' }}",
+		"url": "{{ url('/phim/' . ($phim['slug'] ?? '')) }}",
+		@if(isset($phim['year']))
+		"datePublished": "{{ $phim['year'] }}",
+		@endif
+		@if(isset($phim['rating']) && count($phim['rating']) > 0)
+		"aggregateRating": {
+			"@type": "AggregateRating",
+			"ratingValue": "{{ number_format(array_sum($phim['rating']) / count($phim['rating']), 1) }}",
+			"ratingCount": "{{ count($phim['rating']) }}",
+			"bestRating": "5",
+			"worstRating": "1"
+		},
+		@endif "genre": [
+			@if(isset($phim['tags']))
+			@foreach($phim['tags'] as $index => $tag)
+			"{{ $tag['name'] ?? '' }}" {
+				{
+					$index < count($phim['tags']) - 1 ? ',' : ''
+				}
+			}
+			@endforeach
+			@endif
+		],
+		@if(isset($phim['time']))
+		"duration": "PT{{ $phim['time'] }}",
+		@endif "inLanguage": "{{ $phim['lang'] ?? 'vi' }}",
+		"countryOfOrigin": {
+			"@type": "Country",
+			"name": "{{ $phim['country'] ?? 'Trung Quốc' }}"
+		}
+	}
 </script>
 @endpush
 
@@ -229,7 +231,14 @@
 					@if(isset($phim['lang']))
 					<div class="hh3d-info">
 						<div>Ngôn ngữ: </div>
-						<div>{{ $phim['lang'] }}</div>
+						<div>
+							{{
+        $phim['lang'] == 'Vietsub' ? 'Vietsub' : 
+        ($phim['lang'] == 'ThuyetMinh' ? 'Thuyết Minh' : 
+        ($phim['lang'] == 'ThuyetMinh-Vietsub' ? 'Thuyết Minh - Vietsub' : 'Unknown'))
+    }}
+						</div>
+
 					</div>
 					@endif
 

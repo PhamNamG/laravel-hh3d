@@ -85,6 +85,7 @@
                     </div>
                     @endif
         </section>
+        <x-week />
     </div>
 </div>
 @endsection

@@ -18117,7 +18117,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
 	.nav-tabs.nav-justified > li {
 		display: table-cell;
-		width: 1%;
 	}
 
 	.nav-tabs.nav-justified > li > a {
@@ -18198,7 +18197,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (min-width: 768px) {
 	.nav-justified > li {
 		display: table-cell;
-		width: 1%;
 	}
 
 	.nav-justified > li > a {

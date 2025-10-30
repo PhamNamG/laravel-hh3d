@@ -23,6 +23,7 @@ return [
         'category_filters' => '/category/filters',
         'category_sitemap' => '/categorys/sitemap',
         'products' => '/products',
+        'week' => '/week',
     ],
 
 ];
