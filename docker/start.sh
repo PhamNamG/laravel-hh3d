@@ -13,8 +13,13 @@ mkdir -p /var/www/html/storage/logs
 mkdir -p /var/log/supervisor
 
 # Set proper permissions
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/public
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+chmod -R 755 /var/www/html/public
+
+# Ensure static files are readable
+find /var/www/html/public -type f -exec chmod 644 {} \;
+find /var/www/html/public -type d -exec chmod 755 {} \;
 
 # Wait for database (if needed)
 if [ -n "$DB_HOST" ]; then

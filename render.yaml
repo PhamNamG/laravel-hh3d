@@ -15,6 +15,10 @@ services:
       - key: APP_KEY
         generateValue: true
         sync: false
+      - key: APP_URL
+        sync: false
+      - key: ASSET_URL
+        sync: false
       - key: LOG_CHANNEL
         value: stack
       - key: DB_CONNECTION

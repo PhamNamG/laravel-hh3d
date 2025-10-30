@@ -129,6 +129,17 @@ docker-compose down
 
 ## 🔧 Troubleshooting
 
+⚠️ **Nếu gặp lỗi 502 Bad Gateway hoặc bất kỳ lỗi nào, xem file `TROUBLESHOOTING.md` để debug chi tiết!**
+
+### ❌ Lỗi: "502 Bad Gateway"
+
+**Nguyên nhân**: PHP-FPM không chạy hoặc Nginx không kết nối được
+
+**Giải pháp**: 
+1. Xem logs: `docker-compose logs -f app`
+2. Kiểm tra PHP-FPM: `docker exec <container> supervisorctl status`
+3. Đọc chi tiết trong `TROUBLESHOOTING.md`
+
 ### ❌ Lỗi: "Permission denied" cho storage
 
 **Giải pháp**: File `start.sh` đã tự động fix permissions. Nếu vẫn lỗi, kiểm tra logs:

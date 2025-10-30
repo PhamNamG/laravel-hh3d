@@ -88,6 +88,7 @@ php artisan migrate --force
 
 | Lỗi | Giải pháp |
 |------|-----------|
+| 502 Bad Gateway | Xem `TROUBLESHOOTING.md` (đã fix PHP-FPM config) |
 | Permission denied | Đã tự động fix trong `start.sh` |
 | Database refused | Dùng Internal URL, không dùng External |
 | 404 Not Found | Clear cache: `php artisan config:clear` |
@@ -95,5 +96,6 @@ php artisan migrate --force
 
 ---
 
-📖 **Chi tiết đầy đủ**: Xem file `DEPLOYMENT.md`
+📖 **Chi tiết đầy đủ**: Xem file `DEPLOYMENT.md`  
+🔧 **Debug lỗi 502**: Xem file `TROUBLESHOOTING.md`
 
