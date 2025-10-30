@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
 # Exit on error
 set -e
 
+echo "========================================="
 echo "Starting Laravel application..."
+echo "========================================="
 
 # Create necessary directories
 mkdir -p /var/www/html/storage/framework/{sessions,views,cache}
@@ -34,13 +36,29 @@ fi
 # php artisan migrate --force --no-interaction || echo "Migration failed, continuing..."
 
 # Clear and cache config
+echo "Clearing Laravel caches..."
 php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
 
-echo "Starting supervisord..."
+echo "Caching Laravel configurations..."
+php artisan config:cache || echo "Config cache failed, continuing..."
+php artisan route:cache || echo "Route cache failed, continuing..."
+php artisan view:cache || echo "View cache failed, continuing..."
+
+# Test PHP-FPM configuration
+echo "Testing PHP-FPM configuration..."
+php-fpm -t || { echo "PHP-FPM config test failed!"; exit 1; }
+
+# Test Nginx configuration
+echo "Testing Nginx configuration..."
+nginx -t || { echo "Nginx config test failed!"; exit 1; }
+
+echo "========================================="
+echo "All tests passed! Starting services..."
+echo "PHP-FPM will listen on 127.0.0.1:9000"
+echo "Nginx will listen on 0.0.0.0:10000"
+echo "========================================="
+
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
 

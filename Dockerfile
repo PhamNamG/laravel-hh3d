@@ -17,6 +17,8 @@ RUN apk add --no-cache \
     oniguruma-dev \
     postgresql-dev \
     mysql-client \
+    bash \
+    netcat-openbsd \
     && docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd zip
 
 # Install Composer
@@ -28,6 +30,10 @@ COPY . /var/www/html
 # Copy nginx configuration
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/default.conf /etc/nginx/http.d/default.conf
+
+# Copy PHP-FPM configuration
+COPY docker/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY docker/php.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Copy supervisor configuration
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -44,10 +50,15 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache
 
-# Optimize Laravel
-RUN php artisan config:cache && \
-    php artisan route:cache && \
-    php artisan view:cache
+# Create necessary directories
+RUN mkdir -p /var/log/supervisor /run/php
+
+# Optimize Laravel (skip if .env missing in build)
+RUN if [ -f .env ]; then \
+        php artisan config:cache && \
+        php artisan route:cache && \
+        php artisan view:cache; \
+    fi
 
 # Expose port (Render uses PORT environment variable)
 EXPOSE 10000
