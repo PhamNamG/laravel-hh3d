@@ -1,0 +1,46 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Documentation
+*.md
+README.md
+LICENSE
+
+# Environment files
+.env
+.env.*
+
+# Dependencies
+/vendor
+/node_modules
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Tests
+/tests
+phpunit.xml
+.phpunit.result.cache
+
+# Build artifacts
+/storage/*.key
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+
+# OS files
+.DS_Store
+Thumbs.db
+
