@@ -7,7 +7,12 @@ use Illuminate\Support\Facades\Http;
 
 class PhimController extends Controller
 {
-    private $apiBaseUrl = 'http://localhost:8001/api';
+    private $apiBaseUrl;
+
+    public function __construct()
+    {
+        $this->apiBaseUrl = config('api.base_url');
+    }
 
     public function show($slug)
     {

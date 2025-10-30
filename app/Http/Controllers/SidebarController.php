@@ -8,7 +8,12 @@ use Illuminate\Support\Facades\Cache;
 
 class SidebarController extends Controller
 {
-    private $apiBaseUrl = 'http://localhost:8001/api';
+    private $apiBaseUrl;
+
+    public function __construct()
+    {
+        $this->apiBaseUrl = config('api.base_url');
+    }
 
     /**
      * Get popular movies for sidebar
@@ -55,7 +60,7 @@ class SidebarController extends Controller
     public static function getSidebarData()
     {
         try {
-            $apiBaseUrl = 'http://localhost:8001/api';
+            $apiBaseUrl = config('api.base_url');
             
             // Cache trong 5 phút
             return Cache::remember('sidebar_popular', 300, function () use ($apiBaseUrl) {
