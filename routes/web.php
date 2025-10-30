@@ -17,9 +17,15 @@ use App\Http\Controllers\HomeController;
 // Trang chủ
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Các routes khác (sẽ implement sau)
+// Phim routes
 Route::get('/phim/{slug}', [App\Http\Controllers\PhimController::class, 'show'])->name('phim');
 
 // Xem phim
 Route::get('/xem/{categorySlug}/{episodeSlug}', [App\Http\Controllers\XemController::class, 'show'])->name('xem');
+
+// API routes for sidebar
+Route::prefix('api')->group(function () {
+    Route::get('/sidebar/popular', [App\Http\Controllers\SidebarController::class, 'getPopularMovies'])->name('api.sidebar.popular');
+    Route::post('/sidebar/clear-cache', [App\Http\Controllers\SidebarController::class, 'clearCache'])->name('api.sidebar.clear-cache');
+});
 

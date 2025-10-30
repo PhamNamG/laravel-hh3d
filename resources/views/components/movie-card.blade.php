@@ -1,72 +1,60 @@
+{{-- Movie Card Component - Maps API data to hhkungfu.ee theme --}}
 @props(['category'])
 
-<div class="movie-card">
-    <a href="{{ url('/phim/' . $category['slug']) }}" class="movie-link">
-        <!-- Poster Image -->
-        <div class="movie-poster">
-            <img 
-                src="{{ $category['linkImg'] ?? 'https://via.placeholder.com/300x400?text=No+Image' }}" 
-                alt="{{ $category['name'] }}"
-                loading="lazy"
-            >
+<article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-{{ $category['_id'] ?? '' }}">
+    <div class="halim-item">
+        <a class="halim-thumb" 
+           href="{{ url('/phim/' . ($category['slug'] ?? '#')) }}" 
+           title="{{ $category['name'] ?? 'Phim' }}">
             
-            <!-- Episode Badge -->
-            @if(isset($category['products']) && count($category['products']) > 0)
-                <div class="episode-badge">
-                    {{ formatEpisodeCount(count($category['products']), $category['sumSeri'] ?? null) }}
-                    [{{ $category['quality'] ?? 'HD' }}]
-                </div>
+            <figure>
+                <img 
+                    width="300" 
+                    height="400" 
+                    src="{{ $category['linkImg'] ?? 'https://via.placeholder.com/300x400?text=No+Image' }}" 
+                    alt="{{ $category['name'] ?? 'Phim' }}" 
+                    class="wp-post-image img-responsive"
+                    loading="lazy"
+                >
+            </figure>
+            
+            {{-- Quality Badge (FULL HD, 4K, etc) --}}
+            @if(isset($category['quality']))
+                <span class="status">{{ strtoupper($category['quality']) }}</span>
+            @elseif(isset($category['lang']))
+                <span class="status">{{ $category['lang'] }}</span>
+            @else
+                <span class="status">FULL HD</span>
             @endif
             
-            <!-- Status Badge -->
-            @if(isset($category['status']))
-                <div class="status-badge status-{{ strtolower($category['status']) }}">
-                    {{ $category['status'] === 'completed' ? 'Hoàn Thành' : 'Đang Phát' }}
-                </div>
-            @endif
+            {{-- Episode Count Badge --}}
+            @php
+                $sumSeri = $category['sumSeri'] ?? $category['totalEpisodes'] ?? 0;
+                $latestProduct = isset($category['products']) && count($category['products']) > 0 
+                    ? $category['products'][0] 
+                    : null;
+                $currentEpisode = $latestProduct['seri'] ?? $sumSeri;
+            @endphp
             
-            <!-- New Badge -->
-            @if(isset($category['newMovie']) && $category['newMovie'])
-                <div class="new-badge">NEW</div>
-            @endif
-            
-            <!-- Play Icon Overlay -->
-            <div class="play-overlay">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="white">
-                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                </svg>
-            </div>
-        </div>
-        
-        <!-- Movie Info -->
-        <div class="movie-info">
-            <h3 class="movie-title">{{ $category['name'] }}</h3>
-            
-            @if(isset($category['anotherName']))
-                <p class="movie-subtitle">{{ $category['anotherName'] }}</p>
-            @endif
-            
-            <div class="movie-meta">
-                @if(isset($category['year']))
-                    <span class="meta-item">{{ $category['year'] }}</span>
-                @endif
-                
-                @if(isset($category['lang']))
-                    <span class="meta-item">{{ $category['lang'] }}</span>
-                @endif
-                
-                @if(isset($category['rating']) && count($category['rating']) > 0)
-                    @php
-                        $avgRating = formatRating($category['rating']);
-                    @endphp
-                    @if($avgRating)
-                        <span class="meta-item rating">
-                            ⭐ {{ $avgRating }}
-                        </span>
+            @if($sumSeri > 0)
+                <span class="episode">
+                    Tập {{ $currentEpisode }}/{{ $sumSeri }}
+                    @if(isset($category['quality']) && str_contains(strtolower($category['quality']), '4k'))
+                        [4K]
                     @endif
-                @endif
+                </span>
+            @endif
+            
+            {{-- Movie Title Box --}}
+            <div class="halim-post-title-box">
+                <div class="halim-post-title">
+                    <h2 class="entry-title">{{ $category['name'] ?? 'Phim' }}</h2>
+                    
+                    @if(isset($category['anotherName']) && $category['anotherName'])
+                        <p class="original_title">{{ $category['anotherName'] }}</p>
+                    @endif
+                </div>
             </div>
-        </div>
-    </a>
-</div>
-
+        </a>
+    </div>
+</article>

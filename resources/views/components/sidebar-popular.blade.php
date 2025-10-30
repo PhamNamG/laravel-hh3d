@@ -1,52 +1,40 @@
+{{-- Sidebar Popular - Xem Nhiều --}}
 @props(['categories'])
 
-<aside class="sidebar">
-    <section class="sidebar-section">
-        <h2 class="sidebar-title">XEM NHIỀU</h2>
-        
-        <div class="sidebar-list">
-            @forelse($categories as $index => $category)
-                <div class="sidebar-item">
-                    <a href="{{ url('/phim/' . $category['slug']) }}" class="sidebar-link">
-                        <div class="sidebar-poster">
-                            <img 
-                                src="{{ $category['linkImg'] ?? 'https://via.placeholder.com/80x120?text=No+Image' }}" 
-                                alt="{{ $category['name'] }}"
-                                loading="lazy"
-                            >
-                            
-                            <!-- Rank Badge -->
-                            <div class="rank-badge rank-{{ $index + 1 }}">
-                                {{ $index + 1 }}
-                            </div>
-                        </div>
-                        
-                        <div class="sidebar-info">
-                            <h4 class="sidebar-movie-title">{{ $category['name'] }}</h4>
-                            
-                            @if(isset($category['anotherName']))
-                                <p class="sidebar-movie-subtitle">{{ $category['anotherName'] }}</p>
-                            @endif
-                            
-                            <div class="sidebar-meta">
-                                @if(isset($category['products']) && count($category['products']) > 0)
-                                    <span class="meta-tag">Tập {{ count($category['products']) }}</span>
-                                @endif
-                                
-                                @if(isset($category['quality']))
-                                    <span class="meta-tag">{{ $category['quality'] }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            @empty
-                <div class="empty-state-small">
-                    <p>Chưa có dữ liệu</p>
-                </div>
-            @endforelse
-        </div>
-    </section>
-</aside>
-
-
+<div id="enjoytube-recent-2" class="widget widget-enjoytube-recent widget-posts-thumbnail">
+    <h2 class="widget-title mt-2"><span>Xem Nhiều</span></h2>
+    <div class="popular-post">
+        @forelse($categories as $category)
+            <div class="item post-{{ $category['_id'] ?? '' }}">
+                <a class="thumbnail-link" 
+                   title="{{ $category['name'] ?? 'Phim' }}" 
+                   href="{{ url('/phim/' . ($category['slug'] ?? '#')) }}" 
+                   rel="bookmark">
+                    
+                    <div class="item-link">
+                        <img 
+                            width="60" 
+                            height="80" 
+                            src="{{ $category['linkImg'] ?? 'https://via.placeholder.com/60x80?text=No+Image' }}" 
+                            alt="{{ $category['name'] ?? 'Phim' }}" 
+                            class="wp-post-image img-responsive"
+                            loading="lazy"
+                        >
+                    </div>
+                    
+                    <h3 class="title">{{ $category['name'] ?? 'Phim' }}</h3>
+                    
+                    @if(isset($category['anotherName']) && $category['anotherName'])
+                        <p class="original_title">{{ $category['anotherName'] }}</p>
+                    @endif
+                </a>
+            </div>
+        @empty
+            <div class="item">
+                <p style="color: #ccc; text-align: center; padding: 20px;">
+                    Chưa có dữ liệu
+                </p>
+            </div>
+        @endforelse
+    </div>
+</div>

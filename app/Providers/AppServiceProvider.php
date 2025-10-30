@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Http\View\Composers\SidebarComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,7 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Share sidebar data with specific views that need it
+        View::composer(
+            ['home', 'phim', 'xem', 'components.sidebar-popular'],
+            SidebarComposer::class
+        );
     }
 }
 

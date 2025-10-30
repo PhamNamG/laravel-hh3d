@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class HomeController extends Controller
 {
-    private $apiBaseUrl = 'http://hh3d.id.vn/api';
+    private $apiBaseUrl = 'http://localhost:8001/api';
 
     public function index()
     {
@@ -16,33 +16,20 @@ class HomeController extends Controller
             // Thêm timestamp để bypass cache
             $response = Http::timeout(10)
                 ->withHeaders(['Cache-Control' => 'no-cache'])
-                ->get("{$this->apiBaseUrl}/categorys", [
+                ->get("{$this->apiBaseUrl}/category/latest/next", [
                     'page' => 1,
                     '_t' => time(), // Cache buster
                 ]);
 
             $categories = $response->successful() ? $response->json() : [];
 
-            // Lấy danh sách xem nhiều (có thể từ endpoint khác)
-            $popularResponse = Http::timeout(10)
-                ->withHeaders(['Cache-Control' => 'no-cache'])
-                ->get("{$this->apiBaseUrl}/category/filters", [
-                    'width' => 300,
-                    'height' => 400,
-                    '_t' => time(), // Cache buster
-                ]);
-
-            $popularCategories = $popularResponse->successful() ? $popularResponse->json() : [];
-
             return view('home', [
                 'categories' => $categories['data'] ?? [],
-                'popularCategories' => $popularCategories['data'] ?? [],
                 'pagination' => $categories['pagination'] ?? null
             ]);
         } catch (\Exception $e) {
             return view('home', [
                 'categories' => [],
-                'popularCategories' => [],
                 'error' => 'Không thể kết nối đến server'
             ]);
         }

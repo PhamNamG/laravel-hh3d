@@ -1,45 +1,90 @@
 @extends('layouts.app')
 
-@section('title', 'Trang Chủ - HH3D')
+@section('title', 'Hhkungfu - Xem Phim Hoạt Hình 3D Trung Quốc Vietsub Miễn Phí')
+
+@section('meta_description', 'Xem phim hoạt hình 3D Trung Quốc mới nhất, chất lượng cao Full HD. Cập nhật liên tục phim hoạt hình Trung Quốc hay nhất, xem phim online miễn phí tại Hhkungfu.')
+
+@section('meta_keywords', 'phim hoạt hình 3D, phim hoạt hình Trung Quốc, xem phim online, phim 3D vietsub, phim hoạt hình miễn phí, phim Trung Quốc mới nhất')
+
+@section('canonical_url', url('/'))
+
+@section('og_type', 'website')
+@section('og_title', 'Hhkungfu - Xem Phim Hoạt Hình 3D Trung Quốc')
+@section('og_description', 'Kho phim hoạt hình 3D Trung Quốc phong phú, cập nhật liên tục. Xem miễn phí, chất lượng cao.')
+@section('og_url', url('/'))
+
+@push('structured_data')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Hhkungfu",
+  "url": "{{ url('/') }}",
+  "description": "Xem phim hoạt hình 3D Trung Quốc miễn phí",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "{{ url('/search') }}?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+@endpush
 
 @section('content')
-<div class="container">
-    <div class="home-wrapper">
-        <!-- Main Content -->
-        <div class="main-section">
-            <!-- New Updates Section -->
-            <section class="section">
-                <h2 class="section-title">MỚI CẬP NHẬT</h2>
-                
-                @if(isset($error))
-                    <div class="error-message">
-                        <p>{{ $error }}</p>
+<div id="main-contents" class="col-xs-12 col-sm-12 col-md-8">
+    <div id="wrapper">
+        <section class="hot-movies">
+                    <div class="section-bar clearfix">
+                        <h3 class="section-title"><span>Mới cập nhật</span></h3>
                     </div>
-                @endif
-                
-                <div class="movie-grid">
-                    @forelse($categories as $category)
-                        <x-movie-card :category="$category" />
-                    @empty
-                        <div class="empty-state">
-                            <p>Chưa có phim nào được cập nhật</p>
+                    
+                    @if(isset($error))
+                        <div class="alert alert-danger">
+                            {{ $error }}
                         </div>
-                    @endforelse
-                </div>
-                
-                <!-- Load More Button -->
-                @if(count($categories) >= 12)
-                    <div class="load-more-wrapper">
-                        <button class="btn btn-load-more" onclick="loadMoreCategories()">
-                            Xem Thêm
-                        </button>
+                    @endif
+                    
+                    <div class="halim_box">
+                        @forelse($categories as $category)
+                            <x-movie-card :category="$category" />
+                        @empty
+                            <div class="col-md-12">
+                                <p class="text-center" style="color: #ccc; padding: 40px;">
+                                    Chưa có phim nào được cập nhật
+                                </p>
+                            </div>
+                        @endforelse
                     </div>
-                @endif
-            </section>
-        </div>
-        
-        <!-- Sidebar -->
-        <x-sidebar-popular :categories="$popularCategories" />
+                    
+                    <div class="clearfix"></div>
+                    
+                    @if(isset($pagination) && $pagination['totalPages'] > 1)
+                    <div class="text-center">
+                        <ul class="page-numbers">
+                            @if($pagination['currentPage'] > 1)
+                                <li><a class="page-numbers" href="?page={{ $pagination['currentPage'] - 1 }}">« Trước</a></li>
+                            @endif
+                            
+                            @for($i = 1; $i <= min(5, $pagination['totalPages']); $i++)
+                                @if($i == $pagination['currentPage'])
+                                    <li><span aria-current="page" class="page-numbers current">{{ $i }}</span></li>
+                                @else
+                                    <li><a class="page-numbers" href="?page={{ $i }}">{{ $i }}</a></li>
+                                @endif
+                            @endfor
+                            
+                            @if($pagination['totalPages'] > 5)
+                                <li><span class="page-numbers dots">…</span></li>
+                                <li><a class="page-numbers" href="?page={{ $pagination['totalPages'] }}">{{ $pagination['totalPages'] }}</a></li>
+                            @endif
+                            
+                            @if($pagination['currentPage'] < $pagination['totalPages'])
+                                <li><a class="next page-numbers" href="?page={{ $pagination['currentPage'] + 1 }}">Tiếp »</a></li>
+                            @endif
+                        </ul>
+                    </div>
+                    @endif
+        </section>
     </div>
 </div>
 @endsection

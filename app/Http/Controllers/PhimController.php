@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class PhimController extends Controller
 {
-    private $apiBaseUrl = 'http://hh3d.id.vn/api';
+    private $apiBaseUrl = 'http://localhost:8001/api';
 
     public function show($slug)
     {
@@ -19,22 +19,19 @@ class PhimController extends Controller
                     '_t' => time(), // Cache buster
                 ]);
             
+            
             if (!$response->successful()) {
-                return redirect('/')->with('error', 'Không tìm thấy phim');
+                // Thay vì redirect, hiển thị thông báo lỗi cụ thể
+                return view('phim', [
+                    'phim' => [
+                        'name' => 'Lỗi',
+                        'error' => 'API Error: ' . $response->status() . ' - ' . $response->body()
+                    ],
+                    'episodes' => [],
+                ]);
             }
 
             $phim = $response->json();
-
-            // Lấy danh sách xem nhiều cho sidebar
-            $popularResponse = Http::timeout(10)
-                ->withHeaders(['Cache-Control' => 'no-cache'])
-                ->get("{$this->apiBaseUrl}/category/filters", [
-                    'width' => 300,
-                    'height' => 400,
-                    '_t' => time(), // Cache buster
-                ]);
-
-            $popularCategories = $popularResponse->successful() ? $popularResponse->json() : [];
 
             // Sort episodes theo số tập giảm dần
             $episodes = $phim['products'] ?? [];
@@ -45,10 +42,15 @@ class PhimController extends Controller
             return view('phim', [
                 'phim' => $phim,
                 'episodes' => $episodes,
-                'popularCategories' => $popularCategories['data'] ?? [],
             ]);
         } catch (\Exception $e) {
-            return redirect('/')->with('error', 'Không thể tải thông tin phim');
+            return view('phim', [
+                'phim' => [
+                    'name' => 'Lỗi Exception',
+                    'error' => $e->getMessage()
+                ],
+                'episodes' => [],
+            ]);
         }
     }
 }

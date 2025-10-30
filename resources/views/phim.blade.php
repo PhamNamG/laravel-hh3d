@@ -1,473 +1,332 @@
 @extends('layouts.app')
 
-@section('title', ($phim['name'] ?? 'Phim') . ' - HH3D')
+@section('title', ($phim['name'] ?? 'Phim') . ' - ' . ($phim['anotherName'] ?? '') . ' - Xem Phim Online Vietsub - HH3D')
 
-@section('content')
-<div class="container">
-    <div class="phim-wrapper">
-        <!-- Main Content -->
-        <div class="phim-main">
-            <!-- Phim Info Section -->
-            <div class="phim-info-container">
-                <!-- Poster -->
-                <div class="phim-poster-large">
-                    <img 
-                        src="{{ $phim['linkImg'] ?? 'https://via.placeholder.com/300x400?text=No+Image' }}" 
-                        alt="{{ $phim['name'] ?? '' }}"
-                    >
-                    <a href="#episodes" class="btn-watch-now">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
-                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                        </svg>
-                        Xem phim
-                    </a>
-                </div>
-
-                <!-- Info Details -->
-                <div class="phim-details">
-                    <h1 class="phim-title">{{ $phim['name'] ?? 'Không có tên' }}</h1>
-                    
-                    @if(isset($phim['anotherName']))
-                        <p class="phim-subtitle">{{ $phim['anotherName'] }}</p>
-                    @endif
-
-                    <div class="phim-meta-list">
-                        @if(isset($phim['type']))
-                            <div class="meta-row">
-                                <span class="meta-label">Thể Loại:</span>
-                                <span class="meta-value">{{ $phim['type'] }}</span>
-                            </div>
-                        @endif
-
-                        @if(count($episodes) > 0)
-                            <div class="meta-row">
-                                <span class="meta-label">Tập mới nhất:</span>
-                                <span class="meta-value highlight">
-                                    Tập {{ $episodes[0]['seri'] ?? 0 }}
-                                    @if(isset($phim['sumSeri']))
-                                        /{{ $phim['sumSeri'] }}
-                                    @endif
-                                    [{{ $phim['quality'] ?? 'HD' }}]
-                                </span>
-                            </div>
-                        @endif
-
-                        @if(isset($phim['status']))
-                            <div class="meta-row">
-                                <span class="meta-label">Tình trạng:</span>
-                                <span class="meta-value">{{ $phim['status'] === 'completed' ? 'Hoàn thành' : 'Đang chiếu' }}</span>
-                            </div>
-                        @endif
-
-                        @if(isset($phim['view']))
-                            <div class="meta-row">
-                                <span class="meta-label">Lượt xem:</span>
-                                <span class="meta-value">{{ number_format($phim['view']) ?? '2207K' }}</span>
-                            </div>
-                        @endif
-
-                        @if(isset($phim['rating']) && count($phim['rating']) > 0)
-                            @php
-                                $avgRating = formatRating($phim['rating']);
-                                $ratingCount = count($phim['rating']);
-                            @endphp
-                            <div class="meta-row">
-                                <span class="meta-label">Đánh Giá:</span>
-                                <span class="meta-value rating-display">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        @if($i <= floor($avgRating))
-                                            ⭐
-                                        @elseif($i - 0.5 <= $avgRating)
-                                            ⭐
-                                        @else
-                                            ☆
-                                        @endif
-                                    @endfor
-                                    <span class="rating-text">{{ $avgRating }}/5 - ({{ $ratingCount }} bình chọn)</span>
-                                </span>
-                            </div>
-                        @endif
-
-                        @if(isset($phim['year']))
-                            <div class="meta-row">
-                                <span class="meta-label">Năm:</span>
-                                <span class="meta-value">{{ $phim['year'] }}</span>
-                            </div>
-                        @endif
-
-                        @if(isset($phim['country']))
-                            <div class="meta-row">
-                                <span class="meta-label">Quốc gia:</span>
-                                <span class="meta-value">{{ $phim['country'] }}</span>
-                            </div>
-                        @endif
-
-                        @if(isset($phim['lang']))
-                            <div class="meta-row">
-                                <span class="meta-label">Ngôn ngữ:</span>
-                                <span class="meta-value">{{ $phim['lang'] }}</span>
-                            </div>
-                        @endif
-                    </div>
-
-                    @if(isset($phim['des']))
-                        <div class="phim-description">
-                            <p>{{ $phim['des'] }}</p>
-                        </div>
-                    @endif
-                </div>
-            </div>
-
-            <!-- Episodes Section -->
-            <section class="episodes-section" id="episodes">
-                <!-- Server Tabs -->
-                <div class="server-tabs">
-                    <button class="server-tab active" data-server="vietsub">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                        VIETSUB
-                    </button>
-                    
-                    @if(isset($phim['thuyetMinh']) && $phim['thuyetMinh'])
-                        <button class="server-tab" data-server="thuyet-minh">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
-                            THUYẾT MINH
-                        </button>
-                    @endif
-                </div>
-
-                <!-- Episodes Grid -->
-                <div class="episodes-grid">
-                    @forelse($episodes as $episode)
-                        <a 
-                            href="{{ url('/xem/' . $phim['slug'] . '/' . $episode['slug']) }}" 
-                            class="episode-button"
-                            title="{{ $episode['name'] ?? 'Tập ' . $episode['seri'] }}"
-                        >
-                            Tập {{ $episode['seri'] }}
-                        </a>
-                    @empty
-                        <div class="empty-episodes">
-                            <p>Chưa có tập phim nào</p>
-                        </div>
-                    @endforelse
-                </div>
-            </section>
-        </div>
-
-        <!-- Sidebar -->
-        <x-sidebar-popular :categories="$popularCategories" />
-    </div>
-</div>
+@section('meta_description')
+{{ ($phim['name'] ?? 'Phim') }} {{ isset($phim['anotherName']) ? '(' . $phim['anotherName'] . ')' : '' }} - {{ isset($phim['des']) ? Str::limit($phim['des'], 150) : 'Xem phim hoạt hình 3D Trung Quốc miễn phí' }}. {{ isset($phim['quality']) ? 'Chất lượng ' . strtoupper($phim['quality']) : '' }}{{ isset($phim['lang']) ? ', ' . $phim['lang'] : '' }}.
 @endsection
 
-@push('styles')
-<style>
-/* Phim Page Specific Styles */
-.phim-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 30px;
+@section('meta_keywords')
+{{ $phim['name'] ?? 'phim' }}, {{ $phim['anotherName'] ?? '' }}, phim hoạt hình 3D, {{ isset($phim['tags']) ? implode(', ', array_column($phim['tags'], 'name')) : '' }}, xem phim online, {{ $phim['lang'] ?? 'vietsub' }}
+@endsection
+
+@section('canonical_url', url('/phim/' . ($phim['slug'] ?? '')))
+
+@section('og_type', 'video.movie')
+@section('og_title', ($phim['name'] ?? 'Phim') . ' - ' . ($phim['anotherName'] ?? ''))
+@section('og_description', isset($phim['des']) ? Str::limit($phim['des'], 200) : 'Xem phim hoạt hình 3D Trung Quốc miễn phí')
+@section('og_image', $phim['linkImg'] ?? asset('images/Logo.jpg'))
+@section('og_url', url('/phim/' . ($phim['slug'] ?? '')))
+
+@push('structured_data')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Movie",
+  "name": "{{ $phim['name'] ?? 'Phim' }}",
+  "alternateName": "{{ $phim['anotherName'] ?? '' }}",
+  "description": "{{ isset($phim['des']) ? Str::limit($phim['des'], 200) : '' }}",
+  "image": "{{ $phim['linkImg'] ?? '' }}",
+  "url": "{{ url('/phim/' . ($phim['slug'] ?? '')) }}",
+  @if(isset($phim['year']))
+  "datePublished": "{{ $phim['year'] }}",
+  @endif
+  @if(isset($phim['rating']) && count($phim['rating']) > 0)
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ number_format(array_sum($phim['rating']) / count($phim['rating']), 1) }}",
+    "ratingCount": "{{ count($phim['rating']) }}",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  @endif
+  "genre": [
+    @if(isset($phim['tags']))
+      @foreach($phim['tags'] as $index => $tag)
+        "{{ $tag['name'] ?? '' }}"{{ $index < count($phim['tags']) - 1 ? ',' : '' }}
+      @endforeach
+    @endif
+  ],
+  @if(isset($phim['time']))
+  "duration": "PT{{ $phim['time'] }}",
+  @endif
+  "inLanguage": "{{ $phim['lang'] ?? 'vi' }}",
+  "countryOfOrigin": {
+    "@type": "Country",
+    "name": "{{ $phim['country'] ?? 'Trung Quốc' }}"
+  }
 }
-
-.phim-main {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-/* Phim Info Container */
-.phim-info-container {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 30px;
-    background-color: var(--bg-card);
-    border-radius: 10px;
-    padding: 30px;
-}
-
-.phim-poster-large {
-    position: relative;
-    width: 300px;
-    flex-shrink: 0;
-}
-
-.phim-poster-large img {
-    width: 100%;
-    border-radius: 10px;
-    display: block;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-}
-
-.btn-watch-now {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(135deg, #ff8c00, #ff4500);
-    color: white;
-    padding: 12px 30px;
-    border-radius: 25px;
-    font-size: 16px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 5px 20px rgba(255, 69, 0, 0.4);
-    transition: all 0.3s ease;
-}
-
-.btn-watch-now:hover {
-    transform: translateX(-50%) translateY(-3px);
-    box-shadow: 0 8px 30px rgba(255, 69, 0, 0.6);
-}
-
-.phim-details {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.phim-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin: 0;
-    line-height: 1.3;
-}
-
-.phim-subtitle {
-    font-size: 18px;
-    color: var(--text-secondary);
-    margin: 0;
-}
-
-.phim-meta-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.meta-row {
-    display: flex;
-    gap: 15px;
-    font-size: 14px;
-}
-
-.meta-label {
-    color: var(--text-secondary);
-    min-width: 120px;
-    font-weight: 500;
-}
-
-.meta-value {
-    color: var(--text-primary);
-    flex: 1;
-}
-
-.meta-value.highlight {
-    color: var(--accent-primary);
-    font-weight: 600;
-}
-
-.rating-display {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 18px;
-}
-
-.rating-text {
-    font-size: 14px;
-    color: var(--text-secondary);
-}
-
-.phim-description {
-    margin-top: 10px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.phim-description p {
-    color: var(--text-secondary);
-    line-height: 1.8;
-    font-size: 14px;
-}
-
-/* Episodes Section */
-.episodes-section {
-    background-color: var(--bg-card);
-    border-radius: 10px;
-    padding: 30px;
-}
-
-.server-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid var(--border-color);
-}
-
-.server-tab {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.server-tab:hover {
-    background-color: var(--bg-card-hover);
-    border-color: var(--accent-primary);
-    color: var(--text-primary);
-}
-
-.server-tab.active {
-    background-color: var(--accent-primary);
-    border-color: var(--accent-primary);
-    color: white;
-}
-
-.episodes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: 10px;
-}
-
-.episode-button {
-    padding: 12px 16px;
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    color: var(--text-primary);
-    font-size: 13px;
-    font-weight: 500;
-    text-align: center;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.episode-button:hover {
-    background-color: var(--accent-primary);
-    border-color: var(--accent-primary);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
-}
-
-.empty-episodes {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px;
-    color: var(--text-muted);
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .phim-wrapper {
-        grid-template-columns: 1fr;
-    }
-    
-    .phim-info-container {
-        grid-template-columns: 250px 1fr;
-        padding: 20px;
-    }
-    
-    .phim-poster-large {
-        width: 250px;
-    }
-}
-
-@media (max-width: 768px) {
-    .phim-info-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .phim-poster-large {
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
-    }
-    
-    .phim-title {
-        font-size: 24px;
-    }
-    
-    .meta-row {
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .meta-label {
-        min-width: auto;
-    }
-    
-    .episodes-grid {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    }
-    
-    .server-tabs {
-        flex-wrap: wrap;
-    }
-}
-
-@media (max-width: 480px) {
-    .episodes-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    
-    .episode-button {
-        padding: 10px;
-        font-size: 12px;
-    }
-}
-</style>
-@endpush
-
-@push('scripts')
-<script>
-// Server tabs functionality
-document.querySelectorAll('.server-tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-        // Remove active from all tabs
-        document.querySelectorAll('.server-tab').forEach(t => t.classList.remove('active'));
-        
-        // Add active to clicked tab
-        this.classList.add('active');
-        
-        // Here you can implement different server logic
-        const server = this.dataset.server;
-        console.log('Selected server:', server);
-    });
-});
-
-// Smooth scroll to episodes
-document.querySelector('.btn-watch-now')?.addEventListener('click', function(e) {
-    e.preventDefault();
-    const episodesSection = document.querySelector('#episodes');
-    if (episodesSection) {
-        episodesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        // Auto click first episode after scroll
-        setTimeout(() => {
-            const firstEpisode = document.querySelector('.episode-button');
-            if (firstEpisode) {
-                firstEpisode.style.animation = 'pulse 0.5s ease';
-            }
-        }, 500);
-    }
-});
 </script>
 @endpush
+
+@section('content')
+{{-- Debug Error Display --}}
+@if(isset($phim['error']))
+<div class="alert alert-danger" style="margin: 20px 0; padding: 20px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">
+	<h3>Debug Information:</h3>
+	<pre style="background: #fff; padding: 15px; border-radius: 5px; overflow-x: auto;">{{ $phim['error'] }}</pre>
+	<p style="margin-top: 10px;">
+		<strong>Gợi ý:</strong>
+	<ul>
+		<li>Kiểm tra API URL: <code>http://hh3d.id.vn/api/category/{slug}</code></li>
+		<li>Xem Laravel logs: <code>storage/logs/laravel.log</code></li>
+		<li>Kiểm tra slug có đúng không</li>
+	</ul>
+	</p>
+</div>
+@endif
+
+<main id="main-contents" class="col-xs-12 col-sm-12 col-md-8 single-movie p-3" data-id="{{ $phim['_id'] ?? '' }}">
+	<section id="content">
+		<div class="clearfix wrap-content">
+			<div class="halim-movie-wrapper tpl-2">
+				{{-- Movie Info Section --}}
+				<div class="movie_info col-xs-12">
+					{{-- Poster Column --}}
+					<div class="movie-poster col-md-4">
+						<img
+							width="300"
+							height="450"
+							src="{{ $phim['linkImg'] ?? 'https://via.placeholder.com/300x450?text=No+Image' }}"
+							alt="{{ $phim['name'] ?? 'Phim' }}"
+							class="wp-post-image img-responsive">
+
+						{{-- Watch Button --}}
+						@if(count($episodes) > 0)
+						<div class="halim-watch-box">
+							<a href="{{ url('/xem/' . $phim['slug'] . '/' . $episodes[0]['slug']) }}"
+								class="btn btn-sm btn-danger watch-movie visible-xs-blockx">
+								<i class="fa-solid fa-play"></i> Xem phim
+							</a>
+						</div>
+						@endif
+					</div>
+
+					{{-- Film Info Column --}}
+					<div class="film-poster col-md-8">
+						<div class="movie-detail">
+							<h1 class="entry-title m-0">{{ $phim['name'] ?? 'Không có tên' }}</h1>
+
+							@if(isset($phim['anotherName']) && $phim['anotherName'])
+							<h2 class="org_title">{{ $phim['anotherName'] }}</h2>
+							@endif
+
+							{{-- Thể Loại --}}
+							@if(isset($phim['type']))
+							<div class="list_cate">
+								<div>Thể Loại:</div>
+								<div>
+									@foreach(explode(',', $phim['type']) as $type)
+									<a href="#" rel="tag">{{ trim($type) }}</a>
+									@endforeach
+								</div>
+							</div>
+							@endif
+
+							{{-- Tập mới nhất --}}
+							@if(count($episodes) > 0)
+							<div class="hh3d-new-ep">
+								<div>Tập mới nhất:</div>
+								<div>
+									<span class="new-ep">
+										Tập {{ $episodes[0]['seri'] ?? 0 }}
+										@if(isset($phim['sumSeri']))
+										/{{ $phim['sumSeri'] }}
+										@endif
+										[{{ strtoupper($phim['quality'] ?? 'FHD') }}]
+									</span>
+								</div>
+							</div>
+							@endif
+
+							{{-- Tình trạng --}}
+							@if(isset($phim['status']))
+							<div class="hh3d-info ">
+								<div>Tình trạng:</div>
+								<div>{{ $phim['status'] === 'completed' ? 'Hoàn thành' : 'Đang chiếu' }}</div>
+							</div>
+							@endif
+
+							{{-- Lượt xem --}}
+							<div class="hh3d-info">
+								<div>Lượt xem:</div>
+								<span class="new-ep">N/A</span>
+							</div>
+
+							{{-- Đánh Giá --}}
+							@if(isset($phim['rating']) && count($phim['rating']) > 0)
+							@php
+							$avgRating = array_sum($phim['rating']) / count($phim['rating']);
+							$ratingCount = count($phim['rating']);
+							$ratingWidth = ($avgRating / 5) * 100;
+							@endphp
+							<div class="hh3d-rate">
+								<div>Đánh Giá:</div>
+								<div class="ratings_wrapper single-info">
+									<div class="kk-star-ratings">
+										<div class="kksr-stars">
+											<div class="kksr-stars-inactive">
+												@for($i = 1; $i <= 5; $i++)
+													<div class="kksr-star" data-star="{{ $i }}" style="padding-right: 5px">
+													<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+											</div>
+											@endfor
+										</div>
+										<div class="kksr-stars-active">
+											@for($i = 1; $i <= 5; $i++)
+												<div class="kksr-star" style="padding-right: 5px">
+												<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+										@endfor
+									</div>
+								</div>
+								<div class="kksr-legend" style="font-size: 12.8px;">
+									{{ number_format($avgRating, 1) }}/5 - ({{ $ratingCount }} bình chọn)
+								</div>
+							</div>
+						</div>
+					</div>
+					@endif
+
+					@if(isset($phim['tags']))
+					<div class="hh3d-info">
+						<div>Thể loại:</div>
+						<div>
+							@foreach($phim['tags'] as $tag)
+							<a href="{{ url('/tag/' . ($tag['slug'] ?? '')) }}" rel="tag">
+								{{ $tag['name'] ?? '' }}
+							</a>
+							@endforeach
+						</div>
+					</div>
+					@endif
+
+					{{-- Năm phát hành --}}
+					@if(isset($phim['year']))
+					<div class="hh3d-info">
+						<div>Năm phát hành:</div>
+						<div>{{ $phim['year'] }}</div>
+					</div>
+					@endif
+
+					{{-- Thời lượng --}}
+					@if(isset($phim['time']))
+					<div class="hh3d-info">
+						<div>Thời lượng: </div>
+						<div>{{ $phim['time'] }}</div>
+					</div>
+					@endif
+
+					{{-- Giờ chiếu --}}
+					@if(isset($phim['hour']))
+					<div class="hh3d-info">
+						<div>Giờ chiếu: </div>
+						<div>{{ $phim['hour'] }}</div>
+					</div>
+					@endif
+
+					{{-- Ngôn ngữ --}}
+					@if(isset($phim['lang']))
+					<div class="hh3d-info">
+						<div>Ngôn ngữ: </div>
+						<div>{{ $phim['lang'] }}</div>
+					</div>
+					@endif
+
+				</div>
+			</div>
+		</div>
+		</div>
+
+		{{-- Episodes Section --}}
+		<div id="collapseEps" class="halim-movie-wrapper tpl-2 info-movie">
+			<div id="halim-list-server" class="list-eps-ajax">
+				{{-- Vietsub Server --}}
+				<div class="halim-server show_all_eps">
+					<span class="halim-server-name">
+						<i class="fa-solid fa-database"></i>#Vietsub
+					</span>
+					<ul id="listsv-1" class="halim-list-eps">
+						@forelse($episodes as $episode)
+						<li class="halim-episode halim-episode-1-tap-{{ $episode['seri'] ?? '' }} col-xs-3 col-sm-2 col-lg-1">
+							<a
+								data-post-id="{{ $phim['_id'] ?? '' }}"
+								data-ep="tap-{{ $episode['seri'] ?? '' }}"
+								data-sv="1"
+								href="{{ url('/xem/' . $phim['slug'] . '/' . $episode['slug']) }}"
+								title="Tập {{ $episode['seri'] ?? '' }}">
+								<span class="box-shadow halim-btn">Tập {{ $episode['seri'] ?? '' }}</span>
+							</a>
+						</li>
+						@empty
+						<li class="col-md-12">
+							<p style="color: #ccc; padding: 20px; text-align: center;">
+								Chưa có tập phim nào
+							</p>
+						</li>
+						@endforelse
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+
+				{{-- Thuyết Minh Server (if available) --}}
+				@if(isset($phim['thuyetMinh']) && $phim['thuyetMinh'])
+				<div class="halim-server show_all_eps">
+					<span class="halim-server-name">
+						<i class="fa-solid fa-database"></i>#Thuyết Minh:
+					</span>
+					<ul id="listsv-2" class="halim-list-eps">
+						@foreach($episodes as $episode)
+						<li class="halim-episode halim-episode-2-tap-{{ $episode['seri'] ?? '' }} col-xs-3 col-sm-2 col-lg-1">
+							<a
+								data-post-id="{{ $phim['_id'] ?? '' }}"
+								data-ep="tap-{{ $episode['seri'] ?? '' }}"
+								data-sv="2"
+								href="{{ url('/xem/' . $phim['slug'] . '/' . $episode['slug'] . '?server=2') }}"
+								title="Tập {{ $episode['seri'] ?? '' }}">
+								<span class="box-shadow halim-btn">Tập {{ $episode['seri'] ?? '' }}</span>
+							</a>
+						</li>
+						@endforeach
+					</ul>
+					<div class="clearfix"></div>
+				</div>
+				@endif
+			</div>
+
+			<div class="clearfix"></div>
+
+			{{-- Schedule Info --}}
+			@if(isset($phim['week']) && count($phim['week']) > 0)
+			<div class="halim_showtime_movies">
+				Phim chiếu 1 tập vào {{ implode(', ', array_map(fn($w) => $w['name'] ?? '', $phim['week'])) }}
+			</div>
+			@endif
+
+			{{-- Movie Description --}}
+			@if(isset($phim['des']) && $phim['des'])
+			<div class="entry-content htmlwrap clearfix">
+				<h3 class="section-title"><span>Nội dung phim</span></h3>
+				<div class="video-item halim-entry-box">
+					<article>
+						<p>{{ $phim['des'] }}</p>
+					</article>
+				</div>
+			</div>
+			@endif
+
+			{{-- Tags Section --}}
+			@if(isset($phim['tags']) && count($phim['tags']) > 0)
+			<div class="tags-list mt-5">
+				@foreach($phim['tags'] as $tag)
+				<a href="{{ url('/tag/' . ($tag['slug'] ?? '')) }}" rel="tag">
+					{{ $tag['name'] ?? '' }}
+				</a>
+				@endforeach
+			</div>
+			@endif
+		</div>
+		</div>
+	</section>
+</main>
+@endsection
