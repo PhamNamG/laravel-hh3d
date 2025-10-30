@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($category['name'] ?? 'Xem phim') . ' - Tập ' . ($episode['seri'] ?? '') . ' Vietsub - ' . ($category['anotherName'] ?? '') . ' - HH3D')
+@section('title', ($category['name'] ?? 'Xem phim') . ' - Tập ' . ($episode['seri'] ?? '') . ' Vietsub - ' . ($category['anotherName'] ?? '') . ' - HHKUNGFU')
 
 @section('meta_description')
 Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isset($category['anotherName']) ? '(' . $category['anotherName'] . ')' : '' }} Vietsub {{ isset($category['quality']) ? strtoupper($category['quality']) : 'HD' }} miễn phí. {{ isset($category['des']) ? Str::limit($category['des'], 120) : '' }}

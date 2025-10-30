@@ -1,2 +1,58 @@
+# Robots.txt for Hhkungfu - Movie Streaming Platform
+# Last Updated: 2025
+
+# ==================================================
+# Google and Major Search Engines
+# ==================================================
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 0.5
+
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /public/images/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Crawl-delay: 0.5
+
+# ==================================================
+# Social Media Bots (for sharing previews)
+# ==================================================
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# ==================================================
+# All Other Bots
+# ==================================================
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /vendor/
+Disallow: /storage/
+
+# ==================================================
+# Sitemaps
+# ==================================================
+Sitemap: https://hhkungffu.site/sitemap.xml
+
+# ==================================================
+# Crawl Settings
+# ==================================================
+Crawl-delay: 1
+
+# ==================================================
+# Host (preferred domain)
+# ==================================================
+Host: https://hhkungffu.site

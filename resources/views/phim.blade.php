@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($phim['name'] ?? 'Phim') . ' - ' . ($phim['anotherName'] ?? '') . ' - Xem Phim Online Vietsub - HH3D')
+@section('title', ($phim['name'] ?? 'Phim') . ' - ' . ($phim['anotherName'] ?? '') . ' - Xem Phim Online Vietsub - Hhkungfu')
 
 @section('meta_description')
 {{ ($phim['name'] ?? 'Phim') }} {{ isset($phim['anotherName']) ? '(' . $phim['anotherName'] . ')' : '' }} - {{ isset($phim['des']) ? Str::limit($phim['des'], 150) : 'Xem phim hoạt hình 3D Trung Quốc miễn phí' }}. {{ isset($phim['quality']) ? 'Chất lượng ' . strtoupper($phim['quality']) : '' }}{{ isset($phim['lang']) ? ', ' . $phim['lang'] : '' }}.
