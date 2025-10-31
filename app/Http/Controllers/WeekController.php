@@ -49,7 +49,7 @@ class WeekController extends Controller
                 'data' => [
                     'week' => $week,
                     'content' => $schedule
-                ]
+                ],
             ]);
 
         } catch (\Exception $e) {

@@ -20,6 +20,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Search
 Route::get('/search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
 
+// Mới cập nhật (Latest)
+Route::get('/moi-cap-nhat', [App\Http\Controllers\LatestController::class, 'getLatest'])->name('latest');
+
 // Phim routes
 Route::get('/phim/{slug}', [App\Http\Controllers\PhimController::class, 'show'])->name('phim');
 

@@ -277,3 +277,5 @@ docker exec <container> env | grep -E 'APP|DB'
 
 **Nếu tất cả đều ✅, site sẽ hoạt động! 🎉**
 
+
+

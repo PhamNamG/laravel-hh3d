@@ -18288,7 +18288,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 	}
 
 	.navbar-collapse.collapse {
-		display: block !important;
 		height: auto !important;
 		padding-bottom: 0;
 		overflow: visible !important;
@@ -20271,19 +20270,24 @@ img.avatar.avatar-24.photo {
 }
 
 @media (max-width: 767px) {
-	.halim-schedule-block {
-		display: none;
+	/* Mobile: 2 tabs per row */
+	.halim-schedule-block > li {
+		width: 50% !important;
+		float: left;
+		padding: 0 2px;
+		margin: 0 !important;
+	}
+
+	.halim-schedule-block > li > a {
+		margin: 2px 0 !important;
+		width: 100%;
+		display: block;
+		font-size: 13px;
+		padding: 10px 5px;
 	}
 
 	.halim-schedule-block-mobile.menu {
 		display: none;
-	}
-
-	.halim-schedule-block > li > a,
-	.halim-schedule-block-mobile > li > a {
-		margin-bottom: 1px !important;
-		width: 49%;
-		float: left;
 	}
 
 	.watch-history .item {
@@ -24297,10 +24301,6 @@ https://flickity.metafizzy.co
 	.navbar-fixed-top {
 		top: 0;
 		border-width: 0 0 1px;
-	}
-
-	.navbar-collapse.collapse {
-		display: none !important;
 	}
 
 	.navbar-nav {

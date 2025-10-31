@@ -15,114 +15,90 @@
 
 @push('structured_data')
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Hhkungfu",
-  "url": "{{ url('/') }}",
-  "description": "Xem phim hoạt hình 3D Trung Quốc miễn phí",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "{{ url('/search') }}?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "Hhkungfu",
+		"url": "{{ url('/') }}",
+		"description": "Xem phim hoạt hình 3D Trung Quốc miễn phí",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "{{ url('/search') }}?q={search_term_string}",
+			"query-input": "required name=search_term_string"
+		}
+	}
 </script>
 @endpush
 
 @section('content')
 <div id="main-contents" class="col-xs-12 col-sm-12 col-md-8">
-    <div id="wrapper">
-        <section class="hot-movies">
-                    <div class="section-bar clearfix">
-                        <h3 class="section-title"><span>Mới cập nhật</span></h3>
-                    </div>
-                    
-                    @if(isset($error))
-                        <div class="alert alert-danger">
-                            {{ $error }}
-                        </div>
-                    @endif
-                    
-                    <div class="halim_box">
-                        @forelse($categories as $category)
-                            <x-movie-card :category="$category" />
-                        @empty
-                            <div class="col-md-12">
-                                <p class="text-center" style="color: #ccc; padding: 40px;">
-                                    Chưa có phim nào được cập nhật
-                                </p>
-                            </div>
-                        @endforelse
-                    </div>
-                    
-                    <div class="clearfix"></div>
-                    
-                    @if(isset($pagination) && $pagination['totalPages'] > 1)
-                    <div class="text-center">
-                        <ul class="page-numbers">
-                            @if($pagination['currentPage'] > 1)
-                                <li><a class="page-numbers" href="?page={{ $pagination['currentPage'] - 1 }}">« Trước</a></li>
-                            @endif
-                            
-                            @for($i = 1; $i <= min(5, $pagination['totalPages']); $i++)
-                                @if($i == $pagination['currentPage'])
-                                    <li><span aria-current="page" class="page-numbers current">{{ $i }}</span></li>
-                                @else
-                                    <li><a class="page-numbers" href="?page={{ $i }}">{{ $i }}</a></li>
-                                @endif
-                            @endfor
-                            
-                            @if($pagination['totalPages'] > 5)
-                                <li><span class="page-numbers dots">…</span></li>
-                                <li><a class="page-numbers" href="?page={{ $pagination['totalPages'] }}">{{ $pagination['totalPages'] }}</a></li>
-                            @endif
-                            
-                            @if($pagination['currentPage'] < $pagination['totalPages'])
-                                <li><a class="next page-numbers" href="?page={{ $pagination['currentPage'] + 1 }}">Tiếp »</a></li>
-                            @endif
-                        </ul>
-                    </div>
-                    @endif
-        </section>
-        <x-week />
-    </div>
+	<div id="wrapper">
+		<section class="hot-movies">
+			<div class="section-bar clearfix">
+				<h3 class="section-title"><span>Mới cập nhật</span></h3>
+			</div>
+
+			@if(isset($error))
+			<div class="alert alert-danger">
+				{{ $error }}
+			</div>
+			@endif
+
+			<div class="halim_box">
+				@forelse($categories as $category)
+				<x-movie-card :category="$category" />
+				@empty
+				<div class="col-md-12">
+					<p class="text-center" style="color: #ccc; padding: 40px;">
+						Chưa có phim nào được cập nhật
+					</p>
+				</div>
+				@endforelse
+			</div>
+
+			<div class="clearfix"></div>
+
+			<div class="text-center">
+			<a href="{{ url('/moi-cap-nhat?page=2') }}" class="">Xem thêm</a>
+			</div>
+		</section>
+		<x-week />
+	</div>
 </div>
 @endsection
 
 @push('scripts')
 <script>
-let currentPage = 1;
+	let currentPage = 1;
 
-async function loadMoreCategories() {
-    currentPage++;
-    const button = event.target;
-    button.disabled = true;
-    button.textContent = 'Đang tải...';
-    
-    try {
-        // Có thể implement AJAX load more ở đây
-        window.location.href = `/?page=${currentPage}`;
-    } catch (error) {
-        console.error('Error loading more:', error);
-        button.disabled = false;
-        button.textContent = 'Xem Thêm';
-    }
-}
+	async function loadMoreCategories() {
+		currentPage++;
+		const button = event.target;
+		button.disabled = true;
+		button.textContent = 'Đang tải...';
 
-// Refresh button functionality
-document.querySelector('.btn-refresh')?.addEventListener('click', () => {
-    location.reload();
-});
+		try {
+			// Có thể implement AJAX load more ở đây
+			window.location.href = `/?page=${currentPage}`;
+		} catch (error) {
+			console.error('Error loading more:', error);
+			button.disabled = false;
+			button.textContent = 'Xem Thêm';
+		}
+	}
 
-// Search form enhancement
-const searchInput = document.querySelector('.search-input');
-searchInput?.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !searchInput.value.trim()) {
-        e.preventDefault();
-        alert('Vui lòng nhập từ khóa tìm kiếm');
-    }
-});
+	// Refresh button functionality
+	document.querySelector('.btn-refresh')?.addEventListener('click', () => {
+		location.reload();
+	});
+
+	// Search form enhancement
+	const searchInput = document.querySelector('.search-input');
+	searchInput?.addEventListener('keypress', (e) => {
+		if (e.key === 'Enter' && !searchInput.value.trim()) {
+			e.preventDefault();
+			alert('Vui lòng nhập từ khóa tìm kiếm');
+		}
+	});
 </script>
 @endpush
-
