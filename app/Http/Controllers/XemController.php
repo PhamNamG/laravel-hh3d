@@ -14,7 +14,7 @@ class XemController extends Controller
         $this->apiBaseUrl = config('api.base_url');
     }
 
-    public function show($categorySlug, $episodeSlug)
+    public function show($episodeSlug)
     {
         try {
             // Lấy thông tin episode

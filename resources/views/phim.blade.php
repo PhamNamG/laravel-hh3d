@@ -96,7 +96,7 @@
 						{{-- Watch Button --}}
 						@if(count($episodes) > 0)
 						<div class="halim-watch-box">
-							<a href="{{ url('/xem/' . $phim['slug'] . '/' . $episodes[0]['slug']) }}"
+							<a href="{{ url('/xem/' . $episodes[0]['slug']) }}"
 								class="btn btn-sm btn-danger watch-movie visible-xs-blockx">
 								<i class="fa-solid fa-play"></i> Xem phim
 							</a>
@@ -262,7 +262,7 @@
 								data-post-id="{{ $phim['_id'] ?? '' }}"
 								data-ep="tap-{{ $episode['seri'] ?? '' }}"
 								data-sv="1"
-								href="{{ url('/xem/' . $phim['slug'] . '/' . $episode['slug']) }}"
+								href="{{ url('/xem/' . $episode['slug']) }}"
 								title="Tập {{ $episode['seri'] ?? '' }}">
 								<span class="box-shadow halim-btn">Tập {{ $episode['seri'] ?? '' }}</span>
 							</a>
@@ -291,10 +291,10 @@
 								data-post-id="{{ $phim['_id'] ?? '' }}"
 								data-ep="tap-{{ $episode['seri'] ?? '' }}"
 								data-sv="2"
-								href="{{ url('/xem/' . $phim['slug'] . '/' . $episode['slug'] . '?server=2') }}"
+								href="{{ url('/xem/' . $episode['slug'] . '?server=2') }}"
 								title="Tập {{ $episode['seri'] ?? '' }}">
 								<span class="box-shadow halim-btn">Tập {{ $episode['seri'] ?? '' }}</span>
-							</a>
+							</a>	
 						</li>
 						@endforeach
 					</ul>

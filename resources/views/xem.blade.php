@@ -10,13 +10,13 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
 {{ $category['name'] ?? '' }} tập {{ $episode['seri'] ?? '' }}, {{ $category['anotherName'] ?? '' }}, xem phim online, {{ $category['lang'] ?? 'vietsub' }}, {{ isset($category['tags']) ? implode(', ', array_column($category['tags'], 'name')) : '' }}
 @endsection
 
-@section('canonical_url', url('/xem/' . ($category['slug'] ?? '') . '/' . ($episode['slug'] ?? '')))
+@section('canonical_url', url('/xem/' . ($episode['slug'] ?? '')))
 
 @section('og_type', 'video.episode')
 @section('og_title', ($category['name'] ?? 'Xem phim') . ' - Tập ' . ($episode['seri'] ?? ''))
 @section('og_description', 'Xem ' . ($category['name'] ?? 'phim') . ' Tập ' . ($episode['seri'] ?? '') . ' Vietsub miễn phí')
 @section('og_image', $category['linkImg'] ?? asset('images/Logo.jpg'))
-@section('og_url', url('/xem/' . ($category['slug'] ?? '') . '/' . ($episode['slug'] ?? '')))
+@section('og_url', url('/xem/' . ($episode['slug'] ?? '')))
 
 @push('structured_data')
 <script type="application/ld+json">
@@ -27,7 +27,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
   "name": "{{ $category['name'] ?? '' }} - Tập {{ $episode['seri'] ?? '' }}",
   "description": "{{ isset($category['des']) ? Str::limit($category['des'], 200) : '' }}",
   "image": "{{ $category['linkImg'] ?? '' }}",
-  "url": "{{ url('/xem/' . ($category['slug'] ?? '') . '/' . ($episode['slug'] ?? '')) }}",
+  "url": "{{ url('/xem/' . ($episode['slug'] ?? '')) }}",
   "partOfSeries": {
     "@type": "TVSeries",
     "name": "{{ $category['name'] ?? '' }}",
@@ -51,7 +51,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
     "@type": "WatchAction",
     "target": {
       "@type": "EntryPoint",
-      "urlTemplate": "{{ url('/xem/' . ($category['slug'] ?? '') . '/' . ($episode['slug'] ?? '')) }}",
+      "urlTemplate": "{{ url('/xem/' . ($episode['slug'] ?? '')) }}",
       "actionPlatform": [
         "http://schema.org/DesktopWebPlatform",
         "http://schema.org/MobileWebPlatform"
@@ -88,7 +88,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
       "@type": "ListItem",
       "position": 3,
       "name": "Tập {{ $episode['seri'] ?? '' }}",
-      "item": "{{ url('/xem/' . ($category['slug'] ?? '') . '/' . ($episode['slug'] ?? '')) }}"
+      "item": "{{ url('/xem/' . ($episode['slug'] ?? '')) }}"
     }
   ]
 }
@@ -115,7 +115,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
                     <div class="col-xs-12 col-md-8">
                         @if($prevEpisode)
                             <div class="luotxem halim-prev-episode">
-                                <a href="{{ url('/xem/' . $category['slug'] . '/' . $prevEpisode) }}">
+                                <a href="{{ url('/xem/' . $prevEpisode) }}">
                                     <i class="fa-solid fa-backward"></i> Tập trước
                                 </a>
                             </div>
@@ -127,7 +127,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
                         
                         @if($nextEpisode)
                             <div class="luotxem halim-next-episode">
-                                <a href="{{ url('/xem/' . $category['slug'] . '/' . $nextEpisode) }}">
+                                <a href="{{ url('/xem/' . $nextEpisode) }}">
                                     Tập tiếp theo <i class="fa-solid fa-forward"></i>
                                 </a>
                             </div>
@@ -161,7 +161,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
                                         data-post-id="{{ $category['_id'] ?? '' }}" 
                                         data-ep="tap-{{ $ep['seri'] ?? '' }}" 
                                         data-sv="1" 
-                                        href="{{ url('/xem/' . $category['slug'] . '/' . $ep['slug']) }}" 
+                                        href="{{ url('/xem/' . $ep['slug']) }}" 
                                         title="Tập {{ $ep['seri'] ?? '' }}"
                                     >
                                         <span class="box-shadow halim-btn {{ $ep['slug'] === $episode['slug'] ? 'active' : '' }}">
@@ -193,7 +193,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
                                         data-post-id="{{ $category['_id'] ?? '' }}" 
                                         data-ep="tap-{{ $ep['seri'] ?? '' }}" 
                                         data-sv="2" 
-                                        href="{{ url('/xem/' . $category['slug'] . '/' . $ep['slug'] . '?server=2') }}" 
+                                        href="{{ url('/xem/' . $ep['slug'] . '?server=2') }}" 
                                         title="Tập {{ $ep['seri'] ?? '' }}"
                                     >
                                         <span class="box-shadow halim-btn">Tập {{ $ep['seri'] ?? '' }}</span>
@@ -212,7 +212,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
                 <div class="title-block watch-page">
                     <div class="title-wrapper full">
                         <h1 class="entry-title">
-                            <a href="{{ url('/xem/' . $category['slug'] . '/' . $episode['slug']) }}" 
+                                <a href="{{ url('/xem/' . $episode['slug']) }}" 
                                title="{{ $category['name'] ?? 'Phim' }} Tập {{ $episode['seri'] ?? '' }} Vietsub" 
                                class="tl">
                                 <i class="fa fa-info-circle"></i> 

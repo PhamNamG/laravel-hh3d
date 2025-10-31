@@ -27,7 +27,7 @@ Route::get('/moi-cap-nhat', [App\Http\Controllers\LatestController::class, 'getL
 Route::get('/phim/{slug}', [App\Http\Controllers\PhimController::class, 'show'])->name('phim');
 
 // Xem phim
-Route::get('/xem/{categorySlug}/{episodeSlug}', [App\Http\Controllers\XemController::class, 'show'])->name('xem');
+Route::get('/xem/{episodeSlug}', [App\Http\Controllers\XemController::class, 'show'])->name('xem');
 
 // API routes
 Route::prefix('api')->group(function () {
