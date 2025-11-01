@@ -64,11 +64,10 @@
 @section('content')
 {{-- Movie Not Found --}}
 @if(isset($notFound) && $notFound)
-	<x-not-found 
-		icon="fa-film"
-		title="Không tìm thấy phim"
-		message="Rất tiếc, phim bạn đang tìm kiếm không tồn tại hoặc đã bị xóa."
-	/>
+<x-not-found
+	icon="fa-film"
+	title="Không tìm thấy phim"
+	message="Rất tiếc, phim bạn đang tìm kiếm không tồn tại hoặc đã bị xóa." />
 @else
 <main id="main-contents" class="col-xs-12 col-sm-12 col-md-8 single-movie p-3" data-id="{{ $phim['_id'] ?? '' }}">
 	<section id="content">
@@ -256,7 +255,9 @@
 								data-sv="1"
 								href="{{ url('/xem/' . $episode['slug']) }}"
 								title="Tập {{ $episode['seri'] ?? '' }}">
-								<span class="box-shadow halim-btn">Tập {{ $episode['seri'] ?? '' }}</span>
+								<span class="box-shadow halim-btn">
+									{{ is_numeric($episode['seri']) ? 'Tập ' . $episode['seri'] : $episode['seri'] }}
+								</span>
 							</a>
 						</li>
 						@empty
@@ -286,7 +287,7 @@
 								href="{{ url('/xem/' . $episode['slug'] . '?server=2') }}"
 								title="Tập {{ $episode['seri'] ?? '' }}">
 								<span class="box-shadow halim-btn">Tập {{ $episode['seri'] ?? '' }}</span>
-							</a>	
+							</a>
 						</li>
 						@endforeach
 					</ul>

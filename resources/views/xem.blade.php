@@ -173,7 +173,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
                                         title="Tập {{ $ep['seri'] ?? '' }}"
                                     >
                                         <span class="box-shadow halim-btn {{ $ep['slug'] === $episode['slug'] ? 'active' : '' }}">
-                                            Tập {{ $ep['seri'] ?? '' }}
+                                            {{ is_numeric($ep['seri']) ? 'Tập ' . $ep['seri'] : $ep['seri'] }}
                                         </span>
                                     </a>
                                 </li>

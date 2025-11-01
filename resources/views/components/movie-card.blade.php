@@ -38,7 +38,7 @@
             
             @if($sumSeri > 0)
                 <span class="episode">
-                    Tập {{ $currentEpisode }}/{{ $sumSeri }}
+                    {{ is_numeric($currentEpisode) ? 'Tập ' . $currentEpisode : $currentEpisode }}/{{ $sumSeri }}
                     @if(isset($category['quality']) && str_contains(strtolower($category['quality']), '4k'))
                         [4K]
                     @endif
