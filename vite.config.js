@@ -12,9 +12,9 @@ export default defineConfig({
         }),
     ],
     build: {
-        manifest: true,
+        manifest: 'manifest.json', // ✅ Đặt manifest ở root của build dir
         outDir: 'public/build',
-        emptyOutDir: true, // ✅ thêm dòng này
+        emptyOutDir: true,
         rollupOptions: {
             output: {
                 manualChunks: {
