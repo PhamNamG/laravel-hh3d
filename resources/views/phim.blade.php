@@ -39,18 +39,17 @@
 			"bestRating": "5",
 			"worstRating": "1"
 		},
-		@endif
-		"genre": [
+		@endif "genre": [
 			@if(isset($phim['tags']))
-				@foreach($phim['tags'] as $index => $tag)
-					"{{ $tag['name'] ?? '' }}"@if($index < count($phim['tags']) - 1),@endif
-				@endforeach
+			@foreach($phim['tags'] as $index => $tag)
+			"{{ $tag['name'] ?? '' }}"
+			@if($index < count($phim['tags']) - 1), @endif
+			@endforeach
 			@endif
 		],
 		@if(isset($phim['time']))
 		"duration": "PT{{ $phim['time'] }}",
-		@endif
-		"inLanguage": "{{ $phim['lang'] ?? 'vi' }}",
+		@endif "inLanguage": "{{ $phim['lang'] ?? 'vi' }}",
 		"countryOfOrigin": {
 			"@type": "Country",
 			"name": "{{ $phim['country'] ?? 'Trung Quốc' }}"
@@ -230,6 +229,17 @@
 
 					</div>
 					@endif
+					<div class="hh3d-info align-items-center">
+					<div>Cộng đồng: </div>
+						<span class="social-buttons">
+							<a href="https://zalo.me/g/hhkungfu" target="_blank" rel="noopener noreferrer" class="btn-social btn-zalo">
+								<i class="fa-solid fa-comments"></i> Zalo Group
+							</a>
+							<a href="https://t.me/hhkungfu" target="_blank" rel="noopener noreferrer" class="btn-social btn-telegram">
+								<i class="fa-brands fa-telegram"></i> Telegram
+							</a>
+						</span>
+					</div>
 
 				</div>
 			</div>
@@ -314,6 +324,8 @@
 				</div>
 			</div>
 			@endif
+
+			<x-comment-section />
 
 			{{-- Tags Section --}}
 			@if(isset($phim['tags']) && count($phim['tags']) > 0)
