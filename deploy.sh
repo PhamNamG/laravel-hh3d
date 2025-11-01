@@ -39,20 +39,34 @@ fi
 echo -e "${YELLOW}[3/10] Installing Composer dependencies...${NC}"
 composer install --optimize-autoloader --no-dev
 
-# Step 4: Install NPM dependencies
-echo -e "${YELLOW}[4/10] Installing NPM dependencies...${NC}"
-npm install
+# Step 4-5: Build Vite assets (if Node.js is available)
+if command -v npm &> /dev/null; then
+    echo -e "${YELLOW}[4/10] Installing NPM dependencies...${NC}"
+    npm install
 
-# Step 5: Build Vite assets (IMPORTANT!)
-echo -e "${YELLOW}[5/10] Building production assets with Vite...${NC}"
-npm run build
+    echo -e "${YELLOW}[5/10] Building production assets with Vite...${NC}"
+    npm run build
 
-# Verify build
-if [ -d "public/build/assets" ]; then
-    ASSET_COUNT=$(ls -1 public/build/assets/*.{css,js} 2>/dev/null | wc -l)
-    echo -e "${GREEN}✅ Built $ASSET_COUNT asset files${NC}"
+    # Verify build
+    if [ -d "public/build/assets" ]; then
+        ASSET_COUNT=$(ls -1 public/build/assets/*.{css,js} 2>/dev/null | wc -l)
+        echo -e "${GREEN}✅ Built $ASSET_COUNT asset files${NC}"
+    else
+        echo -e "${RED}❌ Warning: public/build/assets/ not found${NC}"
+    fi
 else
-    echo -e "${RED}❌ Warning: public/build/assets/ not found${NC}"
+    echo -e "${RED}[4-5/10] Skipping Vite build - Node.js/NPM not installed${NC}"
+    echo -e "${YELLOW}⚠️  To enable Vite asset building, install Node.js 18+:${NC}"
+    echo -e "${YELLOW}    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -${NC}"
+    echo -e "${YELLOW}    sudo apt install -y nodejs${NC}"
+    echo ""
+    
+    # Check if build directory exists from previous build
+    if [ -d "public/build/assets" ]; then
+        echo -e "${YELLOW}✅ Using existing Vite assets from previous build${NC}"
+    else
+        echo -e "${RED}❌ WARNING: No Vite assets found! CSS/JS may not load correctly.${NC}"
+    fi
 fi
 
 # Step 6: Clear all caches
