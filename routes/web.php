@@ -45,3 +45,7 @@ Route::get('/sitemap.xml', [App\Http\Controllers\SitemapController::class, 'inde
 Route::get('/sitemap/debug', [App\Http\Controllers\SitemapController::class, 'debug'])->name('sitemap.debug');
 Route::post('/sitemap/clear', [App\Http\Controllers\SitemapController::class, 'clear'])->name('sitemap.clear');
 
+// Calendar
+Route::get('/lich-chieu', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar');
+Route::get('/xem-nhieu', [App\Http\Controllers\TopViewController::class, 'index'])->name('top-view');
+Route::get('/hoan-thanh', [App\Http\Controllers\CompleteController::class, 'index'])->name('complete');

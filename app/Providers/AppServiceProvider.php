@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Share sidebar data with specific views that need it
         View::composer(
-            ['home', 'phim', 'xem', 'search', 'components.sidebar-popular', 'lastest'],
+            ['home', 'phim', 'xem', 'search', 'components.sidebar-popular', 'lastest', 'calendar', 'top-view', 'complete'],
             SidebarComposer::class
         );
     }
