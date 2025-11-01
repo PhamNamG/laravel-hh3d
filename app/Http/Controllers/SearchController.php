@@ -42,7 +42,7 @@ class SearchController extends Controller
 
                 // Call API
                 $response = Http::timeout(10)
-                    ->withHeaders(['Cache-Control' => 'no-cache'])
+                    ->withHeaders(['Cache-Control' => 'max-age=300'])
                     ->get($url);
 
                 if ($response->successful()) {

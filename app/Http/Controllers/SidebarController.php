@@ -25,7 +25,7 @@ class SidebarController extends Controller
             // Cache trong 5 phút để tránh call API quá nhiều
             $popularCategories = Cache::remember('sidebar_popular', 300, function () {
                 $response = Http::timeout(10)
-                    ->withHeaders(['Cache-Control' => 'no-cache'])
+                    ->withHeaders(['Cache-Control' => 'max-age=2592000'])
                     ->get("{$this->apiBaseUrl}/category/filters", [
                         'width' => 300,
                         'height' => 400,
@@ -45,7 +45,7 @@ class SidebarController extends Controller
                 'data' => $popularCategories
             ]);
         } catch (\Exception $e) {
-            
+
             return response()->json([
                 'success' => false,
                 'data' => [],
@@ -61,11 +61,11 @@ class SidebarController extends Controller
     {
         try {
             $apiBaseUrl = config('api.base_url');
-            
+
             // Cache trong 5 phút
             return Cache::remember('sidebar_popular', 300, function () use ($apiBaseUrl) {
                 $response = Http::timeout(10)
-                    ->withHeaders(['Cache-Control' => 'no-cache'])
+                    ->withHeaders(['Cache-Control' => 'max-age=2592000'])
                     ->get("{$apiBaseUrl}/category/filters", [
                         'width' => 300,
                         'height' => 400,
@@ -90,11 +90,10 @@ class SidebarController extends Controller
     public function clearCache()
     {
         Cache::forget('sidebar_popular');
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Sidebar cache cleared successfully'
         ]);
     }
 }
-

@@ -26,7 +26,7 @@ class LatestController extends Controller
 
       $result = Cache::remember($cacheKey, 300, function () use ($page) {
         $response = Http::timeout(10)
-          ->withHeaders(['Cache-Control' => 'no-cache'])
+          ->withHeaders(['Cache-Control' => 'max-age=300'])
           ->get("{$this->apiBaseUrl}/category/latest/next", [
             'page' => $page,
             '_t' => time(),

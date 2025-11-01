@@ -87,7 +87,7 @@ class SitemapController extends Controller
             $apiUrl = "{$this->apiBaseUrl}/categorys/sitemap";
             
             $response = Http::timeout(10)
-                ->withHeaders(['Cache-Control' => 'no-cache'])
+                ->withHeaders(['Cache-Control' => 'max-age=86400']) 
                 ->get($apiUrl);
 
 

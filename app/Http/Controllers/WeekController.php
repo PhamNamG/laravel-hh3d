@@ -22,14 +22,14 @@ class WeekController extends Controller
     public function getByWeek(Request $request)
     {
         $week = $request->input('w', 'Thứ 2'); // Default: Monday
-        
+
         try {
             // Cache schedule data for 5 minutes
             $cacheKey = 'week_schedule_' . md5($week);
-            
+
             $schedule = Cache::remember($cacheKey, 300, function () use ($week) {
                 $response = Http::timeout(10)
-                    ->withHeaders(['Cache-Control' => 'no-cache'])
+                    ->withHeaders(['Cache-Control' => 'max-age=86400']) // 1 ngày
                     ->get("{$this->apiBaseUrl}/week", [
                         'w' => $week,
                         '_t' => time(),
@@ -40,7 +40,7 @@ class WeekController extends Controller
                     // Backend returns {name, content} structure
                     return $data['content'] ?? [];
                 }
-                
+
                 return [];
             });
 
@@ -51,10 +51,9 @@ class WeekController extends Controller
                     'content' => $schedule
                 ],
             ]);
-
         } catch (\Exception $e) {
             Log::error("Week Schedule Error: " . $e->getMessage());
-            
+
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to load schedule',
@@ -91,7 +90,7 @@ class WeekController extends Controller
     public function clearCache()
     {
         $days = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật'];
-        
+
         foreach ($days as $day) {
             Cache::forget('week_schedule_' . md5($day));
         }
@@ -102,4 +101,3 @@ class WeekController extends Controller
         ]);
     }
 }
-
