@@ -39,20 +39,18 @@
 			"bestRating": "5",
 			"worstRating": "1"
 		},
-		@endif "genre": [
+		@endif
+		"genre": [
 			@if(isset($phim['tags']))
-			@foreach($phim['tags'] as $index => $tag)
-			"{{ $tag['name'] ?? '' }}" {
-				{
-					$index < count($phim['tags']) - 1 ? ',' : ''
-				}
-			}
-			@endforeach
+				@foreach($phim['tags'] as $index => $tag)
+					"{{ $tag['name'] ?? '' }}"@if($index < count($phim['tags']) - 1),@endif
+				@endforeach
 			@endif
 		],
 		@if(isset($phim['time']))
 		"duration": "PT{{ $phim['time'] }}",
-		@endif "inLanguage": "{{ $phim['lang'] ?? 'vi' }}",
+		@endif
+		"inLanguage": "{{ $phim['lang'] ?? 'vi' }}",
 		"countryOfOrigin": {
 			"@type": "Country",
 			"name": "{{ $phim['country'] ?? 'Trung Quốc' }}"
@@ -122,11 +120,11 @@
 								<div>Tập mới nhất:</div>
 								<div>
 									<span class="new-ep">
-										Tập {{ $episodes[0]['seri'] ?? 0 }}
+										{{ is_numeric($episodes[0]['seri']) ? 'Tập ' . $episodes[0]['seri'] : $episodes[0]['seri'] }}
 										@if(isset($phim['sumSeri']))
 										/{{ $phim['sumSeri'] }}
 										@endif
-										[{{ strtoupper($phim['quality'] ?? 'FHD') }}]
+										[{{ strtoupper($phim['quality'] ?? 'FHD') }}]`
 									</span>
 								</div>
 							</div>
