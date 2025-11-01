@@ -96,6 +96,14 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
 @endpush
 
 @section('content')
+{{-- Episode Not Found --}}
+@if(isset($notFound) && $notFound)
+	<x-not-found 
+		icon="fa-video-slash"
+		title="Không tìm thấy tập phim"
+		message="Rất tiếc, tập phim bạn đang tìm kiếm không tồn tại hoặc đã bị xóa."
+	/>
+@else
 <main id="main-contents" class="col-xs-12 col-sm-12 col-md-8 watch-page single-movie" data-id="{{ $category['_id'] ?? '' }}">
     <section id="content">
                 {{-- Video Player - Được tạo động bởi JavaScript --}}
@@ -280,6 +288,7 @@ Xem {{ $category['name'] ?? 'phim' }} Tập {{ $episode['seri'] ?? '' }} {{ isse
         @endif
     </section>
 </main>
+@endif
 @endsection
 
 @push('scripts')

@@ -62,22 +62,14 @@
 @endpush
 
 @section('content')
-{{-- Debug Error Display --}}
-@if(isset($phim['error']))
-<div class="alert alert-danger" style="margin: 20px 0; padding: 20px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">
-	<h3>Debug Information:</h3>
-	<pre style="background: #fff; padding: 15px; border-radius: 5px; overflow-x: auto;">{{ $phim['error'] }}</pre>
-	<p style="margin-top: 10px;">
-		<strong>Gợi ý:</strong>
-	<ul>
-		<li>Kiểm tra API URL: <code>http://hh3d.id.vn/api/category/{slug}</code></li>
-		<li>Xem Laravel logs: <code>storage/logs/laravel.log</code></li>
-		<li>Kiểm tra slug có đúng không</li>
-	</ul>
-	</p>
-</div>
-@endif
-
+{{-- Movie Not Found --}}
+@if(isset($notFound) && $notFound)
+	<x-not-found 
+		icon="fa-film"
+		title="Không tìm thấy phim"
+		message="Rất tiếc, phim bạn đang tìm kiếm không tồn tại hoặc đã bị xóa."
+	/>
+@else
 <main id="main-contents" class="col-xs-12 col-sm-12 col-md-8 single-movie p-3" data-id="{{ $phim['_id'] ?? '' }}">
 	<section id="content">
 		<div class="clearfix wrap-content">
@@ -338,4 +330,5 @@
 		</div>
 	</section>
 </main>
+@endif
 @endsection

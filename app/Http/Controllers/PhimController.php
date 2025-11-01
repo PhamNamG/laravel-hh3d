@@ -26,12 +26,10 @@ class PhimController extends Controller
             
             
             if (!$response->successful()) {
-                // Thay vì redirect, hiển thị thông báo lỗi cụ thể
+                // Hiển thị trang 404 thân thiện
                 return view('phim', [
-                    'phim' => [
-                        'name' => 'Lỗi',
-                        'error' => 'API Error: ' . $response->status() . ' - ' . $response->body()
-                    ],
+                    'notFound' => true,
+                    'phim' => [],
                     'episodes' => [],
                 ]);
             }
@@ -47,13 +45,13 @@ class PhimController extends Controller
             return view('phim', [
                 'phim' => $phim,
                 'episodes' => $episodes,
+                'notFound' => false,
             ]);
         } catch (\Exception $e) {
+            // Hiển thị trang 404 thân thiện
             return view('phim', [
-                'phim' => [
-                    'name' => 'Lỗi Exception',
-                    'error' => $e->getMessage()
-                ],
+                'notFound' => true,
+                'phim' => [],
                 'episodes' => [],
             ]);
         }

@@ -25,7 +25,14 @@ class XemController extends Controller
                 ]);
             
             if (!$response->successful()) {
-                return redirect('/')->with('error', 'Không tìm thấy tập phim');
+                return view('xem', [
+                    'notFound' => true,
+                    'episode' => [],
+                    'category' => [],
+                    'allEpisodes' => [],
+                    'prevEpisode' => null,
+                    'nextEpisode' => null,
+                ]);
             }
 
             $episode = $response->json();
@@ -42,6 +49,7 @@ class XemController extends Controller
             $nextEpisode = $episode['nextEpisode'] ?? null;
 
             return view('xem', [
+                'notFound' => false,
                 'episode' => $episode,
                 'category' => $category,
                 'allEpisodes' => $allEpisodes,
@@ -49,7 +57,14 @@ class XemController extends Controller
                 'nextEpisode' => $nextEpisode,
             ]);
         } catch (\Exception $e) {
-            return redirect('/')->with('error', 'Không thể tải tập phim');
+            return view('xem', [
+                'notFound' => true,
+                'episode' => [],
+                'category' => [],
+                'allEpisodes' => [],
+                'prevEpisode' => null,
+                'nextEpisode' => null,
+            ]);
         }
     }
 }
