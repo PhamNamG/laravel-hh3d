@@ -73,7 +73,7 @@
 				{{-- Movie Info Section --}}
 				<div class="movie_info col-xs-12">
 					{{-- Poster Column --}}
-					<div class="movie-poster col-md-4">
+					<div class="movie-poster col-md-3">
 						<img
 							width="300"
 							height="450"

@@ -57,13 +57,8 @@
     @vite([
         'resources/css/app.css',
         'resources/js/app.js',
-        'resources/css/comment.css',
-        'resources/css/search-autocomplete.css',
         'resources/css/navbar.css',
-        'resources/css/404.css',
-        'resources/css/header.css',
-        'resources/css/episode-cart.css',
-        'resources/css/responsive.css',
+        'resources/css/comment.css',
     ])
 
     @stack('styles')

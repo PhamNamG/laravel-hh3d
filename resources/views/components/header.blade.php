@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mobile-icon-menu col-md-3 d-none d-md-block">
+            <div class="mobile-icon-menu col-md-4 d-none d-md-block">
                 <div class="nav-items flex-wrap flex"> <a href="/lich-su" title="Lịch sử xem">
                         <div> <i class="fa-solid fa-clock-rotate-left"></i></div>
                     </a> <a href="/bookmark" title="Bookmark">
