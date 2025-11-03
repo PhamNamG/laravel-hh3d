@@ -17,6 +17,8 @@ return [
 
     'cache_ttl' => env('API_CACHE_TTL', 300), // 5 minutes
 
+    'webhook_secret' => env('API_WEBHOOK_SECRET', 'change-this-secret-key'),
+
     'endpoints' => [
         'categories' => '/category/latest/next',
         'category_detail' => '/category',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class XemController extends Controller
 {
@@ -17,14 +18,24 @@ class XemController extends Controller
     public function show($episodeSlug)
     {
         try {
-            // Lấy thông tin episode
-            $response = Http::timeout(10)
-                ->withHeaders(['Cache-Control' => 'no-cache'])
-                ->get("{$this->apiBaseUrl}/product/{$episodeSlug}", [
-                    '_t' => time(), // Cache buster
-                ]);
+            // Cache dữ liệu trong 5 phút (300 giây)
+            $cacheKey = "episode_detail_{$episodeSlug}";
             
-            if (!$response->successful()) {
+            $episode = Cache::remember($cacheKey, 300, function () use ($episodeSlug) {
+                $response = Http::timeout(10)
+                    ->withHeaders(['Cache-Control' => 'no-cache'])
+                    ->get("{$this->apiBaseUrl}/product/{$episodeSlug}", [
+                        '_t' => time(), // Cache buster
+                    ]);
+                
+                if (!$response->successful()) {
+                    return null;
+                }
+
+                return $response->json();
+            });
+            
+            if (!$episode) {
                 return view('xem', [
                     'notFound' => true,
                     'episode' => [],
@@ -35,7 +46,6 @@ class XemController extends Controller
                 ]);
             }
 
-            $episode = $response->json();
             $category = $episode['category'] ?? null;
 
             // Sort episodes theo số tập giảm dần

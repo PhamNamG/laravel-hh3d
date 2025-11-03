@@ -22,8 +22,8 @@ class SidebarController extends Controller
     public function getPopularMovies()
     {
         try {
-            // Cache trong 5 phút để tránh call API quá nhiều
-            $popularCategories = Cache::remember('sidebar_popular', 300, function () {
+            // Cache sidebar 15 phút (danh sách phổ biến ít thay đổi)
+            $popularCategories = Cache::remember('sidebar_popular', 900, function () {
                 $response = Http::timeout(10)
                     ->withHeaders(['Cache-Control' => 'max-age=2592000'])
                     ->get("{$this->apiBaseUrl}/category/filters", [
@@ -62,8 +62,8 @@ class SidebarController extends Controller
         try {
             $apiBaseUrl = config('api.base_url');
 
-            // Cache trong 5 phút
-            return Cache::remember('sidebar_popular', 300, function () use ($apiBaseUrl) {
+            // Cache sidebar 15 phút (danh sách phổ biến ít thay đổi)
+            return Cache::remember('sidebar_popular', 900, function () use ($apiBaseUrl) {
                 $response = Http::timeout(10)
                     ->withHeaders(['Cache-Control' => 'max-age=2592000'])
                     ->get("{$apiBaseUrl}/category/filters", [

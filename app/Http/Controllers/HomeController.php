@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -17,16 +18,19 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            // Lấy danh sách categories mới cập nhật
-            // Thêm timestamp để bypass cache
-            $response = Http::timeout(10)
-                ->withHeaders(['Cache-Control' => 'no-cache'])
-                ->get("{$this->apiBaseUrl}/category/latest/next", [
-                    'page' => 1,
-                    '_t' => time(), // Cache buster
-                ]);
+            // Cache trang chủ 3 phút (có phim mới liên tục)
+            $cacheKey = 'home_categories_page_1';
+            
+            $categories = Cache::remember($cacheKey, 180, function () {
+                $response = Http::timeout(10)
+                    ->withHeaders(['Cache-Control' => 'no-cache'])
+                    ->get("{$this->apiBaseUrl}/category/latest/next", [
+                        'page' => 1,
+                        '_t' => time(), // Cache buster
+                    ]);
 
-            $categories = $response->successful() ? $response->json() : [];
+                return $response->successful() ? $response->json() : [];
+            });
 
             return view('home', [
                 'categories' => $categories['data'] ?? [],

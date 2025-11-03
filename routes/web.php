@@ -38,6 +38,14 @@ Route::prefix('api')->group(function () {
     // Week Schedule
     Route::get('/week', [App\Http\Controllers\WeekController::class, 'getByWeek'])->name('api.week');
     Route::post('/week/clear-cache', [App\Http\Controllers\WeekController::class, 'clearCache'])->name('api.week.clear-cache');
+    
+    // Cache Management
+    Route::prefix('cache')->group(function () {
+        Route::post('/clear-all', [App\Http\Controllers\CacheController::class, 'clearAll'])->name('api.cache.clear-all');
+        Route::post('/clear', [App\Http\Controllers\CacheController::class, 'clearSpecific'])->name('api.cache.clear');
+        Route::post('/webhook', [App\Http\Controllers\CacheController::class, 'webhookClearCache'])->name('api.cache.webhook');
+        Route::get('/stats', [App\Http\Controllers\CacheController::class, 'stats'])->name('api.cache.stats');
+    });
 });
 
 // Sitemap

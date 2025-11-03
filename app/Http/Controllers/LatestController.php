@@ -21,10 +21,10 @@ class LatestController extends Controller
     $page = $request->input('page', 1);
     
     try {
-      // Cache cả response (bao gồm data + pagination)
+      // Cache trang phim mới 3 phút (cập nhật thường xuyên)
       $cacheKey = 'latest_page_' . $page;
 
-      $result = Cache::remember($cacheKey, 300, function () use ($page) {
+      $result = Cache::remember($cacheKey, 180, function () use ($page) {
         $response = Http::timeout(10)
           ->withHeaders(['Cache-Control' => 'max-age=300'])
           ->get("{$this->apiBaseUrl}/category/latest/next", [

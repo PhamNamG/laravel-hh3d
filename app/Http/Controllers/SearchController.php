@@ -29,31 +29,38 @@ class SearchController extends Controller
 
         if (!empty($query)) {
             try {
-                // Build API URL
-                $url = "{$this->apiBaseUrl}/categorys/search?value=" . urlencode($query);
+                // Cache kết quả search 5 phút (ít thay đổi cho cùng 1 query)
+                $cacheKey = 'search_' . md5($query . implode(',', $categories) . $status);
                 
-                if (!empty($categories) && is_array($categories)) {
-                    $url .= '&categories=' . implode(',', $categories);
-                }
-                
-                if (!empty($status)) {
-                    $url .= '&status=' . $status;
-                }
+                $results = Cache::remember($cacheKey, 300, function () use ($query, $categories, $status, &$error) {
+                    // Build API URL
+                    $url = "{$this->apiBaseUrl}/categorys/search?value=" . urlencode($query);
+                    
+                    if (!empty($categories) && is_array($categories)) {
+                        $url .= '&categories=' . implode(',', $categories);
+                    }
+                    
+                    if (!empty($status)) {
+                        $url .= '&status=' . $status;
+                    }
 
-                // Call API
-                $response = Http::timeout(10)
-                    ->withHeaders(['Cache-Control' => 'max-age=300'])
-                    ->get($url);
+                    // Call API
+                    $response = Http::timeout(10)
+                        ->withHeaders(['Cache-Control' => 'max-age=300'])
+                        ->get($url);
 
-                if ($response->successful()) {
-                    $data = $response->json();
-                    $results = $data ?? [];
-                } else {
+                    if ($response->successful()) {
+                        $data = $response->json();
+                        return $data ?? [];
+                    }
+                    
                     $error = 'Không thể tìm kiếm. Vui lòng thử lại sau.';
-                }
+                    return [];
+                });
 
             } catch (\Exception $e) {
                 $error = 'Lỗi kết nối. Vui lòng thử lại sau.';
+                $results = [];
             }
         }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class PhimController extends Controller
 {
@@ -17,15 +18,24 @@ class PhimController extends Controller
     public function show($slug)
     {
         try {
-            // Lấy chi tiết category/phim
-            $response = Http::timeout(10)
-                ->withHeaders(['Cache-Control' => 'no-cache'])
-                ->get("{$this->apiBaseUrl}/category/{$slug}", [
-                    '_t' => time(), // Cache buster
-                ]);
+            // Cache dữ liệu trong 5 phút (300 giây)
+            $cacheKey = "phim_detail_{$slug}";
             
+            $phim = Cache::remember($cacheKey, 300, function () use ($slug) {
+                $response = Http::timeout(10)
+                    ->withHeaders(['Cache-Control' => 'no-cache'])
+                    ->get("{$this->apiBaseUrl}/category/{$slug}", [
+                        '_t' => time(), // Cache buster
+                    ]);
+                
+                if (!$response->successful()) {
+                    return null;
+                }
+
+                return $response->json();
+            });
             
-            if (!$response->successful()) {
+            if (!$phim) {
                 // Hiển thị trang 404 thân thiện
                 return view('phim', [
                     'notFound' => true,
@@ -33,8 +43,6 @@ class PhimController extends Controller
                     'episodes' => [],
                 ]);
             }
-
-            $phim = $response->json();
 
             // Sort episodes theo số tập giảm dần
             $episodes = $phim['products'] ?? [];
