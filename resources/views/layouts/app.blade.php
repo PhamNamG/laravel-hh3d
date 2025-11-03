@@ -52,10 +52,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     {{-- Vite Assets (All custom CSS/JS bundled here) --}}
-    @vite(['resources/css/app.css', 'resources/js/app.js','resources/css/app2.css'])
-    
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js',
+        'resources/css/comment.css',
+        'resources/css/search-autocomplete.css',
+        'resources/css/navbar.css',
+        'resources/css/404.css',
+        'resources/css/header.css',
+        'resources/css/episode-cart.css',
+        'resources/css/responsive.css',
+    ])
+
     @stack('styles')
 </head>
 

@@ -1,19 +1,36 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import fs from 'fs';
+import path from 'path';
+
+// Hàm lấy tất cả file trong thư mục con
+function getAllFiles(dir, exts) {
+    const files = fs.readdirSync(dir, { withFileTypes: true });
+    let allFiles = [];
+
+    for (const file of files) {
+        const fullPath = path.join(dir, file.name);
+        if (file.isDirectory()) {
+            allFiles = allFiles.concat(getAllFiles(fullPath, exts));
+        } else if (exts.some(ext => file.name.endsWith(ext))) {
+            allFiles.push(fullPath);
+        }
+    }
+
+    return allFiles;
+}
+
+const cssAndJsFiles = getAllFiles('resources', ['.css']);
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: [
-                'resources/css/app.css',  // Import all CSS (app2-7.css)
-                'resources/js/app.js', 
-                'resources/css/app2.css',
-            ],
+            input: [...cssAndJsFiles, 'resources/js/app.js'],
             refresh: true,
         }),
     ],
     build: {
-        manifest: 'manifest.json', // ✅ Đặt manifest ở root của build dir
+        manifest: 'manifest.json',
         outDir: 'public/build',
         emptyOutDir: true,
         rollupOptions: {

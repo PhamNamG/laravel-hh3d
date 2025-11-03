@@ -1,0 +1,146 @@
+.halim_box {
+	list-style: none;
+	padding: 0;
+	margin: 0 -2px 20px;
+	position: relative;
+	overflow: hidden;
+	width: auto;
+	clear: both;
+}
+
+.halim-news-box-widget .halim_box {
+	margin: auto;
+}
+
+.halim_box li.col-md-3.col-sm-6.col-xs-6.thumb img {
+	width: 100%;
+}
+
+
+
+.col-md-3.col-sm-6.col-xs-6.thumb {
+	position: relative;
+}
+
+.halim_box li:nth-child(4n) {
+	margin-right: 0 !important;
+}
+
+.halim_box .grid-item {
+	padding: 5px;
+}
+
+.halim-item {
+	position: relative;
+	line-height: 0;
+	border-radius: 5px;
+}
+
+.halim-item span {
+	line-height: 1.6;
+}
+
+.halim-thumb img {
+	width: 100%;
+	height: auto;
+	height: 260px;
+	object-fit: cover;
+}
+
+.grid-item,
+.grid-item .halim-thumb {
+	position: relative;
+}
+
+.halim_box a.halim-thumb {
+	position: relative;
+	display: inline-block;
+	-webkit-transition: all .1s ease;
+	-o-transition: all .1s ease;
+	transition: all .7s ease;
+	width: 100%;
+}
+
+.halim_box.news a.halim-thumb {
+	width: unset;
+}
+
+
+.halim-post-title-box {
+	position: absolute;
+	line-height: 18px;
+	padding: 80px 0 0;
+	margin: 0;
+	width: 100%;
+	height: auto;
+	bottom: 0;
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(6, 6, 6, .55) 30%, rgba(0, 0, 0, .92) 100%);
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.video-item .halim-post-title-box {
+	background: 0 0;
+	height: auto;
+}
+
+.halim-post-title {
+	position: absolute;
+	background: rgba(0, 0, 0, 0);
+	line-height: 18px;
+	padding: 8px 10px 4px;
+	margin: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+.watch-page .halim-post-title {
+	position: relative;
+	padding: inherit;
+}
+
+.list-news .halim-post-title {
+	position: static;
+	background: 0 0;
+}
+
+.halim-post-title h2 {
+	margin: 0;
+	line-height: 20px;
+}
+
+.halim-post-title a,
+.halim-post-title h2,
+.halim-post-title p,
+.popular-post .original_title {
+	font-size: 13px !important;
+	color: #fff;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-flex: 1;
+	-webkit-box-orient: vertical;
+	margin-bottom: 3px;
+}
+
+.halim-post-title.title-2-line a,
+.halim-post-title.title-2-line p,
+.popular-post .original_title.title-2-line {
+	-webkit-line-clamp: 2;
+}
+
+.halim-post-title a:hover {
+	color: #ff9800;
+}
+
+.halim-post-title .original_title,
+.popular-post .original_title {
+	font-size: 11.5px !important;
+	margin: 0;
+	padding-right: 5px;
+	color: #8a9eaf;
+}
+
+.related-video .halim-post-title {
+	bottom: 0;
+}
