@@ -30,6 +30,7 @@ php artisan down || true
 # Step 2: Pull latest code (if using git)
 if [ -d ".git" ]; then
     echo -e "${YELLOW}[2/10] Pulling latest code from Git...${NC}"
+    git reset --hard
     git pull origin main
 else
     echo -e "${YELLOW}[2/10] Skipping Git pull (not a Git repository)${NC}"
@@ -87,12 +88,9 @@ php artisan view:cache
 # php artisan migrate --force
 
 # Step 9: Set correct permissions
-echo -e "${YELLOW}[9/10] Setting permissions...${NC}"
-sudo chown -R www-data:www-data .
-sudo chmod -R 755 .
-sudo chmod -R 775 storage
-sudo chmod -R 775 bootstrap/cache
-sudo chmod -R 775 public/build
+echo -e "${YELLOW}[9/10] 🔒 Fixing permissions...${NC}"
+sudo chown -R ubuntu:www-data storage bootstrap/cache
+sudo chmod -R 775 storage bootstrap/cache
 
 # Step 10: Restart services
 echo -e "${YELLOW}[10/10] Restarting services...${NC}"

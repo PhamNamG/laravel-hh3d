@@ -36,11 +36,12 @@
                 $currentEpisode = $latestProduct['seri'] ?? $sumSeri;
             @endphp
             
-            @if($sumSeri > 0)
+            @if($sumSeri)
                 <span class="episode">
-                    {{ is_numeric($currentEpisode) ? 'Tập ' . $currentEpisode : $currentEpisode }}/{{ $sumSeri }}
-                    @if(isset($category['quality']) && str_contains(strtolower($category['quality']), '4k'))
-                        [4K]
+                    @if(isset($category['episode_many_title']) && $category['episode_many_title'] && $category['episode_many_title'] !== 'undefined')
+                        {{ 'T' . $category['episode_many_title'] . '/' . $sumSeri }}
+                    @else
+                        {{ is_numeric($currentEpisode) ? 'Tập ' . $currentEpisode . '/' . $sumSeri : $currentEpisode }}
                     @endif
                 </span>
             @endif

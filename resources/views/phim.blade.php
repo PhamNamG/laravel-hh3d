@@ -123,7 +123,7 @@
 										@if(isset($phim['sumSeri']))
 										/{{ $phim['sumSeri'] }}
 										@endif
-										[{{ strtoupper($phim['quality'] ?? 'FHD') }}]`
+										[{{ strtoupper($phim['quality'] ?? 'FHD') }}]
 									</span>
 								</div>
 							</div>
