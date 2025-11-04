@@ -16,8 +16,11 @@
 					<li itemscope="itemscope"
 						itemtype="https://www.schema.org/SiteNavigationElement"
 						id="menu-item-{{ $item['slug'] }}"
-						class="menu-item menu-item-type-custom menu-item-object-custom {{ request()->is($item['pattern']) ? 'active' : '' }} {{ isset($item['dropdown']) ? ' menu-item-has-children dropdown' : '' }}menu-item-{{ $item['slug'] }} nav-item">
-
+						class="menu-item menu-item-type-custom menu-item-object-custom
+						 
+    {{ request()->is($item['pattern']) ? 'active' : '' }}
+    {{ isset($item['dropdown']) ? ' menu-item-has-children dropdown' : '' }}
+    menu-item-{{ $item['slug'] }} nav-item">
 						@if(isset($item['dropdown']))
 						<a title="{{ $item['name'] }}"
 							href="{{ $item['url'] }}"
@@ -36,7 +39,7 @@
 								class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-{{ $child['slug'] }} nav-item">
 								<a title="{{ $child['name'] }}"
 									href="{{ url('/category/' . ($child['slug'] ?? '#')) }}"
-									class="dropdown-item">
+									class="dropdown-item ">
 									{{ $child['name'] }}
 								</a>
 							</li>
@@ -45,7 +48,7 @@
 						@else
 						<a title="{{ $item['name'] }}"
 							href="{{ url($item['url']) }}"
-							class="nav-link">
+							class="nav-link {{ $item['slug'] === 'trang-chu' ? 'bg-dark_' : '' }}">
 							{{ $item['name'] }}
 						</a>
 						@endif

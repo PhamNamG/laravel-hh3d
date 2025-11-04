@@ -4642,17 +4642,29 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 	color: #777;
 }
 
-.nav>li.disabled>a:hover,
-.nav>li.disabled>a:focus {
-	color: #777;
-	text-decoration: none;
-	background-color: transparent;
-	cursor: not-allowed;
+
+
+.main-navigation .navbar-nav>li>a i {
+	font-size: 12px
+}
+
+.main-navigation .navbar-nav>li>a:hover,.main-navigation .navbar-nav>li>a:focus {
+	color: #ea8300;
+	background: #000
 }
 
 .main-navigation .navbar-nav>.active>a,.main-navigation .navbar-nav>.active>a:hover,.main-navigation .navbar-nav>.active>a:focus {
 	color: #fff;
 	background: #234;
+	border: none
+}
+
+.main-navigation .navbar-nav>li.current_page_item:first-child a {
+	border: none
+}
+
+.main-navigation .nav .open>a,.main-navigation .nav .open>a:focus,.main-navigation .nav .open>a:hover {
+	background: #000;
 	border: none
 }
 
@@ -16077,3 +16089,8 @@ h1 {
 #respond p {
 	float: none !important
 }
+
+.bg-dark_ {
+	background: 0 0 !important;
+}
+
