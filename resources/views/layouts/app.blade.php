@@ -55,10 +55,10 @@
 
     {{-- Vite Assets (All custom CSS/JS bundled here) --}}
     @vite([
-        'resources/css/app.css',
-        'resources/js/app.js',
-        'resources/css/navbar.css',
-        'resources/css/comment.css',
+    'resources/css/app.css',
+    'resources/js/app.js',
+    'resources/css/navbar.css',
+    'resources/css/comment.css',
     ])
 
     @stack('styles')
@@ -67,7 +67,6 @@
 <body class="home blog wp-custom-logo wp-embed-responsive wp-theme-videohazz halimthemes halimmovies">
     @include('components.header')
     @include('components.navbar')
-
     <main class="main-content mt-3">
         <div class="container">
             <div id="wrapper" class="row">

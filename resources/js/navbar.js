@@ -41,3 +41,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  const dropdownToggle = document.getElementById('menu-item-dropdown-the-loai');
+  const menuTags = document.querySelector('.dropdown-menu');
+
+  if (!dropdownToggle || !menuTags) return;
+
+  dropdownToggle.addEventListener('click', function (e) {
+    e.preventDefault(); // chặn load lại trang vì href="#"
+    // Hiển thị menu
+    menuTags.classList.toggle('show');
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!dropdownToggle.contains(e.target) && !menuTags.contains(e.target)) {
+      menuTags.classList.remove('show');
+    }
+  });
+});

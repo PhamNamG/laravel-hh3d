@@ -57,3 +57,6 @@ Route::post('/sitemap/clear', [App\Http\Controllers\SitemapController::class, 'c
 Route::get('/lich-chieu', [App\Http\Controllers\CalendarController::class, 'index'])->name('calendar');
 Route::get('/xem-nhieu', [App\Http\Controllers\TopViewController::class, 'index'])->name('top-view');
 Route::get('/hoan-thanh', [App\Http\Controllers\CompleteController::class, 'index'])->name('complete');
+
+// Tag Detail
+Route::get('/category/{slug}', [App\Http\Controllers\TagDetailController::class, 'index'])->name('tag-detail');

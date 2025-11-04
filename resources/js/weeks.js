@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return `
     <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-${anime._id || ''}">
       <div class="halim-item">
-        <a class="halim-thumb" href="{{ url('/phim') }}/${slug}" title="${name}">
+        <a class="halim-thumb" href="/phim/${slug}" title="${name}">
           <figure>
             <img width="300" height="400" 
                  src="${posterUrl}" 

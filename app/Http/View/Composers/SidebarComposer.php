@@ -13,9 +13,12 @@ class SidebarComposer
     public function compose(View $view): void
     {
         // Tự động inject popularCategories vào tất cả views
+        
+        
         $view->with('popularCategories', SidebarController::getSidebarData());
     }
 }
+
 
 
 

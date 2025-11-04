@@ -207,18 +207,55 @@
 					</div>
 					@endif
 
-					{{-- Giờ chiếu --}}
-					@if(isset($phim['hour']))
-					<div class="hh3d-info">
-						<div>Giờ chiếu: </div>
-						<div>{{ $phim['hour'] }}</div>
+					<div class="hh3d-rate">
+						<div>Đánh Giá:</div>
+						<div class="ratings_wrapper single-info">
+							<div class="kk-star-ratings kksr-template">
+								<div class="kksr-stars">
+									<div class="kksr-stars-inactive">
+										<div class="kksr-star" data-star="1" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+										<div class="kksr-star" data-star="2" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+										<div class="kksr-star" data-star="3" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+										<div class="kksr-star" data-star="4" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+										<div class="kksr-star" data-star="5" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+									</div>
+									<div class="kksr-stars-active" style="width: 102.5px;">
+										<div class="kksr-star" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+										<div class="kksr-star" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+										<div class="kksr-star" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+										<div class="kksr-star" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+										<div class="kksr-star" style="padding-right: 5px">
+											<div class="kksr-icon" style="width: 16px; height: 16px;"></div>
+										</div>
+									</div>
+								</div>
+								<div class="kksr-legend" style="font-size: 12.8px;"> 5/5 - (2 bình chọn)</div>
+							</div>
+						</div>
 					</div>
-					@endif
 
 					{{-- Ngôn ngữ --}}
 					@if(isset($phim['lang']))
 					<div class="hh3d-info">
-						<div>Ngôn ngữ: </div>
+						<div>Chất lượng: </div>
 						<div>
 							{{
         $phim['lang'] == 'Vietsub' ? 'Vietsub' : 
@@ -230,7 +267,7 @@
 					</div>
 					@endif
 					<div class="hh3d-info align-items-center">
-					<div>Cộng đồng: </div>
+						<div>Cộng đồng: </div>
 						<span class="social-buttons">
 							<a href="https://zalo.me/g/hhkungfu" target="_blank" rel="noopener noreferrer" class="btn-social btn-zalo">
 								<i class="fa-solid fa-comments"></i> Zalo Group
@@ -256,6 +293,7 @@
 					</span>
 					<ul id="listsv-1" class="halim-list-eps">
 						@forelse($episodes as $episode)
+						@if(isset($phim['isMovie']) && $phim['isMovie'] == 'drama')
 						<li class="halim-episode halim-episode-1-tap-{{ $episode['seri'] ?? '' }} col-xs-3 col-sm-2 col-lg-1">
 							<a
 								data-post-id="{{ $phim['_id'] ?? '' }}"
@@ -268,6 +306,18 @@
 								</span>
 							</a>
 						</li>
+						@else
+						<li class="halim-episode halim-episode-1-tap-{{ $episode['seri'] ?? '' }} col-xs-3 col-sm-2 col-lg-1">
+							<a
+								data-post-id="{{ $phim['_id'] ?? '' }}"
+								href="{{ url('/xem/' . $episode['slug']) }}"
+								title="Tập {{ $episode['seri'] ?? '' }}">
+								<span class="box-shadow halim-btn">
+									Full
+								</span>
+							</a>
+						</li>
+						@endif
 						@empty
 						<li class="col-md-12">
 							<p style="color: #ccc; padding: 20px; text-align: center;">
@@ -286,18 +336,39 @@
 						<i class="fa-solid fa-database"></i>#Thuyết Minh:
 					</span>
 					<ul id="listsv-2" class="halim-list-eps">
-						@foreach($episodes as $episode)
-						<li class="halim-episode halim-episode-2-tap-{{ $episode['seri'] ?? '' }} col-xs-3 col-sm-2 col-lg-1">
+						@forelse($episodes as $episode)
+						@if(isset($phim['isMovie']) && $phim['isMovie'] == 'drama')
+						<li class="halim-episode halim-episode-1-tap-{{ $episode['seri'] ?? '' }} col-xs-3 col-sm-2 col-lg-1">
 							<a
 								data-post-id="{{ $phim['_id'] ?? '' }}"
 								data-ep="tap-{{ $episode['seri'] ?? '' }}"
-								data-sv="2"
-								href="{{ url('/xem/' . $episode['slug'] . '?server=2') }}"
+								data-sv="1"
+								href="{{ url('/xem/' . $episode['slug']) }}"
 								title="Tập {{ $episode['seri'] ?? '' }}">
-								<span class="box-shadow halim-btn">Tập {{ $episode['seri'] ?? '' }}</span>
+								<span class="box-shadow halim-btn">
+									{{ is_numeric($episode['seri']) ? 'Tập ' . $episode['seri'] : $episode['seri'] }}
+								</span>
 							</a>
 						</li>
-						@endforeach
+						@else
+						<li class="halim-episode halim-episode-1-tap-{{ $episode['seri'] ?? '' }} col-xs-3 col-sm-2 col-lg-1">
+							<a
+								data-post-id="{{ $phim['_id'] ?? '' }}"
+								href="{{ url('/xem/' . $episode['slug']) }}"
+								title="Tập {{ $episode['seri'] ?? '' }}">
+								<span class="box-shadow halim-btn">
+									Full
+								</span>
+							</a>
+						</li>
+						@endif
+						@empty
+						<li class="col-md-12">
+							<p style="color: #ccc; padding: 20px; text-align: center;">
+								Chưa có tập phim nào
+							</p>
+						</li>
+						@endforelse
 					</ul>
 					<div class="clearfix"></div>
 				</div>
@@ -327,16 +398,18 @@
 
 			<x-comment-section />
 
-			{{-- Tags Section --}}
-			@if(isset($phim['tags']) && count($phim['tags']) > 0)
 			<div class="tags-list mt-5">
-				@foreach($phim['tags'] as $tag)
-				<a href="{{ url('/tag/' . ($tag['slug'] ?? '')) }}" rel="tag">
-					{{ $tag['name'] ?? '' }}
+				<a href="/" rel="tag">
+					hhkungffu
 				</a>
-				@endforeach
+				<a href="/" rel="tag">
+					hhkungffu site
+				</a>
+				<a href="/" rel="tag">
+					#hoạt hình kungffu
+				</a>
 			</div>
-			@endif
+			
 		</div>
 		</div>
 	</section>

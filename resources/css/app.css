@@ -481,7 +481,7 @@ html :where(.is-position-sticky) {
 }
 
 .kk-star-ratings .kksr-stars .kksr-stars-active .kksr-star .kksr-icon {
-	background-image: url("../svg/active.svg");
+	background-image: url("/public/svg/active.svg");
 }
 
 .kk-star-ratings.kksr-disabled .kksr-stars .kksr-stars-active .kksr-star .kksr-icon,
@@ -4085,7 +4085,7 @@ tbody.collapse.in {
 }
 
 .dropdown-menu {
-	position: absolute;
+	position: absolute !important;
 	top: 100%;
 	left: 0;
 	z-index: 1000;
@@ -4638,12 +4638,6 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 	padding: 10px 15px;
 }
 
-.nav>li>a:hover,
-.nav>li>a:focus {
-	text-decoration: none;
-	background-color: #eee;
-}
-
 .nav>li.disabled>a {
 	color: #777;
 }
@@ -4654,6 +4648,12 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 	text-decoration: none;
 	background-color: transparent;
 	cursor: not-allowed;
+}
+
+.main-navigation .navbar-nav>.active>a,.main-navigation .navbar-nav>.active>a:hover,.main-navigation .navbar-nav>.active>a:focus {
+	color: #fff;
+	background: #234;
+	border: none
 }
 
 .nav .open>a,
@@ -4862,6 +4862,17 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 	border: 1px solid transparent;
 }
 
+.main-navigation .navbar-nav>.active>a,.main-navigation .navbar-nav>.active>a:hover,.main-navigation .navbar-nav>.active>a:focus {
+	color: #fff;
+	background: #234;
+	border: none
+}
+
+.main-navigation .navbar-nav>li>a:hover, .main-navigation .navbar-nav>li>a:focus {
+	color: #ea8300;
+	background: #000;
+}
+
 @media (min-width: 768px) {
 	.navbar {
 		border-radius: 4px;
@@ -4897,10 +4908,11 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 	}
 
 	.navbar-collapse.collapse {
+		display: block !important;
 		height: auto !important;
 		padding-bottom: 0;
-		overflow: visible !important;
-	}
+		overflow: visible !important
+}
 
 	.navbar-collapse.in {
 		overflow-y: visible;
@@ -9004,9 +9016,7 @@ img:hover {
 	padding: 14px 10px;
 }
 
-.home .main-navigation .navbar-nav>.active>a {
-	background: 0 0;
-}
+
 
 .main-navigation .navbar-nav>li>a i {
 	font-size: 12px;
