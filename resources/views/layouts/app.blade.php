@@ -13,7 +13,7 @@
     <meta name="author" content="Hhkungffu">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="@yield('canonical_url', url()->current())">
-
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     {{-- Open Graph / Facebook --}}
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:url" content="@yield('og_url', url()->current())">
