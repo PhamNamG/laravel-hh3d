@@ -2,7 +2,7 @@
 
 @section('title', 'Xem nhiều')
 
-@section('meta_description', 'Xem phim hoạt hình 3D Trung Quốc mới nhất, chất lượng cao Full HD. Cập nhật liên tục phim hoạt hình Trung Quốc hay nhất, xem phim online miễn phí tại Hhkungfu.')
+@section('meta_description', 'Xem phim hoạt hình 3D Trung Quốc mới nhất, chất lượng cao Full HD. Cập nhật liên tục phim hoạt hình Trung Quốc hay nhất, xem phim online miễn phí tại Hhkungffu.')
 
 @section('meta_keywords', 'phim hoạt hình 3D, phim hoạt hình Trung Quốc, xem phim online, phim 3D vietsub, phim hoạt hình miễn phí, phim Trung Quốc mới nhất')
 

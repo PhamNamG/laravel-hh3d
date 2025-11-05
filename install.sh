@@ -22,7 +22,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Get user input
-read -p "Enter your domain name (e.g., hhkungfu.com): " DOMAIN
+read -p "Enter your domain name (e.g., Hhkungffu.com): " DOMAIN
 read -p "Enter your email for SSL certificate: " EMAIL
 read -p "Enter database name [laravel_hh3d]: " DB_NAME
 DB_NAME=${DB_NAME:-laravel_hh3d}
@@ -89,11 +89,11 @@ echo "y" | ufw enable
 
 # Setup project directory
 echo -e "${YELLOW}[9/10] Setting up project...${NC}"
-mkdir -p /var/www/hhkungfu
-cd /var/www/hhkungfu
+mkdir -p /var/www/Hhkungffu
+cd /var/www/Hhkungffu
 
 # You need to upload your project files here
-echo -e "${YELLOW}Please upload your project files to: /var/www/hhkungfu${NC}"
+echo -e "${YELLOW}Please upload your project files to: /var/www/Hhkungffu${NC}"
 echo -e "${YELLOW}Press Enter after uploading files...${NC}"
 read
 
@@ -117,10 +117,10 @@ if [ ! -f ".env" ]; then
 fi
 
 # Set permissions
-chown -R www-data:www-data /var/www/hhkungfu
-chmod -R 755 /var/www/hhkungfu
-chmod -R 775 /var/www/hhkungfu/storage
-chmod -R 775 /var/www/hhkungfu/bootstrap/cache
+chown -R www-data:www-data /var/www/Hhkungffu
+chmod -R 755 /var/www/Hhkungffu
+chmod -R 775 /var/www/Hhkungffu/storage
+chmod -R 775 /var/www/Hhkungffu/bootstrap/cache
 
 # Optimize Laravel
 php artisan config:cache
@@ -129,19 +129,19 @@ php artisan view:cache
 
 # Create Nginx config
 echo -e "${YELLOW}[10/10] Configuring Nginx...${NC}"
-cat > /etc/nginx/sites-available/hhkungfu <<EOF
+cat > /etc/nginx/sites-available/Hhkungffu <<EOF
 server {
     listen 80;
     listen [::]:80;
     server_name $DOMAIN www.$DOMAIN;
     
-    root /var/www/hhkungfu/public;
+    root /var/www/Hhkungffu/public;
     index index.php index.html;
 
     charset utf-8;
 
-    access_log /var/log/nginx/hhkungfu-access.log;
-    error_log /var/log/nginx/hhkungfu-error.log;
+    access_log /var/log/nginx/Hhkungffu-access.log;
+    error_log /var/log/nginx/Hhkungffu-error.log;
 
     client_max_body_size 20M;
 
@@ -180,7 +180,7 @@ server {
 EOF
 
 # Enable site
-ln -sf /etc/nginx/sites-available/hhkungfu /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/Hhkungffu /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 
 # Test and restart Nginx
@@ -212,18 +212,18 @@ echo -e "${GREEN}✅ Installation Complete!${NC}"
 echo -e "${GREEN}================================================${NC}"
 echo ""
 echo -e "Website: ${GREEN}https://$DOMAIN${NC}"
-echo -e "Project directory: ${GREEN}/var/www/hhkungfu${NC}"
+echo -e "Project directory: ${GREEN}/var/www/Hhkungffu${NC}"
 echo ""
 echo -e "${YELLOW}Next steps:${NC}"
 echo "1. Upload your project files if not already done"
-echo "2. Run: cd /var/www/hhkungfu && composer install"
+echo "2. Run: cd /var/www/Hhkungffu && composer install"
 echo "3. Configure .env file if needed"
 echo "4. Test website: https://$DOMAIN"
 echo ""
 echo -e "${YELLOW}Useful commands:${NC}"
 echo "- Restart services: systemctl restart nginx php8.2-fpm"
-echo "- View Laravel logs: tail -f /var/www/hhkungfu/storage/logs/laravel.log"
-echo "- View Nginx logs: tail -f /var/log/nginx/hhkungfu-error.log"
+echo "- View Laravel logs: tail -f /var/www/Hhkungffu/storage/logs/laravel.log"
+echo "- View Nginx logs: tail -f /var/log/nginx/Hhkungffu-error.log"
 echo ""
 echo -e "${GREEN}Happy deploying! 🚀${NC}"
 

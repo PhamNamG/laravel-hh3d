@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="wpdiscuz-subscribe-bar wpdiscuz-hidden">
-          <form action="https://hhkungfu.ee/wp-admin/admin-ajax.php?action=wpdAddSubscription" method="post" id="wpdiscuz-subscribe-form">
+          <form method="post" id="wpdiscuz-subscribe-form">
             <div class="wpdiscuz-subscribe-form-intro">Thông báo của</div>
             <div class="wpdiscuz-subscribe-form-option" style="width:40%;">
               <select class="wpdiscuz_select" name="wpdiscuzSubscriptionType">

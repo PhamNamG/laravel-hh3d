@@ -1,4 +1,4 @@
-{{-- Movie Card Component - Maps API data to hhkungfu.ee theme --}}
+{{-- Movie Card Component - Maps API data to Hhkungffu.ee theme --}}
 @props(['category'])
 
 <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-{{ $category['_id'] ?? '' }}">

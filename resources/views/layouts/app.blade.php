@@ -7,25 +7,25 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     {{-- SEO Meta Tags --}}
-    <title>@yield('title', 'Hhkungfu - Xem Phim Hoạt Hình 3D')</title>
+    <title>@yield('title', 'Hhkungffu - Xem Phim Hoạt Hình 3D')</title>
     <meta name="description" content="@yield('meta_description', 'Xem phim hoạt hình 3D Trung Quốc miễn phí, chất lượng cao. Cập nhật phim mới nhất mỗi ngày.')">
     <meta name="keywords" content="@yield('meta_keywords', 'phim hoạt hình 3D, phim Trung Quốc, xem phim online, phim miễn phí')">
-    <meta name="author" content="Hhkungfu">
+    <meta name="author" content="Hhkungffu">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="@yield('canonical_url', url()->current())">
 
     {{-- Open Graph / Facebook --}}
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:url" content="@yield('og_url', url()->current())">
-    <meta property="og:title" content="@yield('og_title', 'Hhkungfu - Xem Phim Hoạt Hình 3D Trung Quốc')">
+    <meta property="og:title" content="@yield('og_title', 'Hhkungffu - Xem Phim Hoạt Hình 3D Trung Quốc')">
     <meta property="og:description" content="@yield('og_description', 'Xem phim hoạt hình 3D Trung Quốc miễn phí')">
     <meta property="og:image" content="@yield('og_image', asset('images/banner_kungfu.jpg'))">
-    <meta property="og:site_name" content="Hhkungfu">
+    <meta property="og:site_name" content="Hhkungffu">
 
     {{-- Twitter Card --}}
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="@yield('og_url', url()->current())">
-    <meta name="twitter:title" content="@yield('og_title', 'Hhkungfu - Xem Phim Hoạt Hình 3D Trung Quốc')">
+    <meta name="twitter:title" content="@yield('og_title', 'Hhkungffu - Xem Phim Hoạt Hình 3D Trung Quốc')">
     <meta name="twitter:description" content="@yield('og_description', 'Xem phim hoạt hình 3D Trung Quốc miễn phí')">
     <meta name="twitter:image" content="@yield('og_image', asset('images/banner_kungfu.jpg'))">
 

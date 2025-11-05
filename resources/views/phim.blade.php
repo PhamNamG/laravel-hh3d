@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', ($phim['name'] ?? 'Phim') . ' - ' . ($phim['anotherName'] ?? '') . ' - Xem Phim Online Vietsub - Hhkungfu')
+@section('title', ($phim['name'] ?? 'Phim') . ' - ' . ($phim['anotherName'] ?? '') . ' - Xem Phim Online Vietsub - Hhkungffu')
 
 @section('meta_description')
 {{ ($phim['name'] ?? 'Phim') }} {{ isset($phim['anotherName']) ? '(' . $phim['anotherName'] . ')' : '' }} - {{ isset($phim['des']) ? Str::limit($phim['des'], 150) : 'Xem phim hoạt hình 3D Trung Quốc miễn phí' }}. {{ isset($phim['quality']) ? 'Chất lượng ' . strtoupper($phim['quality']) : '' }}{{ isset($phim['lang']) ? ', ' . $phim['lang'] : '' }}.
@@ -269,10 +269,10 @@
 					<div class="hh3d-info align-items-center">
 						<div>Cộng đồng: </div>
 						<span class="social-buttons">
-							<a href="https://zalo.me/g/hhkungfu" target="_blank" rel="noopener noreferrer" class="btn-social btn-zalo">
+							<a href="https://zalo.me/g/Hhkungffu" target="_blank" rel="noopener noreferrer" class="btn-social btn-zalo">
 								<i class="fa-solid fa-comments"></i> Zalo Group
 							</a>
-							<a href="https://t.me/hhkungfu" target="_blank" rel="noopener noreferrer" class="btn-social btn-telegram">
+							<a href="https://t.me/Hhkungffu" target="_blank" rel="noopener noreferrer" class="btn-social btn-telegram">
 								<i class="fa-brands fa-telegram"></i> Telegram
 							</a>
 						</span>

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row" id="headwrap">
             <div class="col-md-3 col-sm-6 slogan">
-                <p class="site-title" style="background-image: url(/images/logo.jpg)"> <a href="/" rel="home">HHKUNGFU - Phim Hoạt Hình Kungfu Trung Quốc Vietsub Độc Quyền</a></p>
+                <p class="site-title" style="background-image: url(/images/logo.jpg)"> <a href="/" rel="home">Hhkungffu - Phim Hoạt Hình Kungfu Trung Quốc Vietsub Độc Quyền</a></p>
             </div>
             <div class="col-md-5 col-sm-6 halim-search-form hidden-xs">
                 <div class="header-nav">

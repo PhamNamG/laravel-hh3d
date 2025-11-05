@@ -8826,7 +8826,7 @@ body.halimthemes {
 	font-family: 'Montserrat', sans-serif;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
-	background: #23232a url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/halimBg.png") fixed center;
+	background: #23232a url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/halimBg.png") fixed center;
 	-webkit-transition: background-color .15s ease-out !important;
 	transition: background-color .15s ease-out !important;
 }
@@ -8939,7 +8939,7 @@ img:hover {
 #header .site-title {
 	margin: 0;
 	text-indent: -9999px;
-	background: url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/halim-dark-logo.png") no-repeat top left;
+	background: url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/halim-dark-logo.png") no-repeat top left;
 	background-size: contain;
 	height: 45px;
 	margin-top: 5px;
@@ -9442,7 +9442,7 @@ input {
 #halim-player-loader {
 	padding: 40px;
 	text-align: center;
-	background: rgba(23, 37, 49, .94) url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/ripple.svg") no-repeat 50% 50%;
+	background: rgba(23, 37, 49, .94) url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/ripple.svg") no-repeat 50% 50%;
 	width: 100%;
 	height: 100%;
 	z-index: 99;
@@ -9976,7 +9976,7 @@ input.search-btn.pull-right {
 	position: absolute;
 	right: 0;
 	border: 1px solid #008cca;
-	background: #008cca url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/search.png") 49% no-repeat;
+	background: #008cca url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/search.png") 49% no-repeat;
 	background-size: 13px;
 	padding: 5px 16px;
 	margin: 0;
@@ -12417,7 +12417,7 @@ a .hl-dot-3 {
 
 .stars-large,
 .stars-large span {
-	background-image: url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/stars-large.png");
+	background-image: url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/stars-large.png");
 }
 
 .post-single-rate {
@@ -12438,7 +12438,7 @@ a .hl-dot-3 {
 }
 
 .taq-load {
-	background: url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/loading.gif") center no-repeat;
+	background: url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/loading.gif") center no-repeat;
 	width: 98px;
 	height: 22px;
 	display: block;
@@ -12675,7 +12675,7 @@ a .hl-dot-3 {
 	border-radius: 20px !important;
 	transition: .7s all;
 	padding: 10px 40px;
-	background: #12171b6e url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/search.svg") 5px 2px no-repeat;
+	background: #12171b6e url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/search.svg") 5px 2px no-repeat;
 }
 
 .halim-search-form .form-control:focus {
@@ -13320,7 +13320,7 @@ a .hl-dot-3 {
 .primary_ribbon,
 .primary_ribbon.bookmarked,
 .primary_ribbon.bookmarked:hover {
-	background: url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/bookmark-2.png") no-repeat;
+	background: url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/bookmark-2.png") no-repeat;
 	width: 42px;
 	height: 47px;
 	background-size: 45px;
@@ -13328,14 +13328,14 @@ a .hl-dot-3 {
 }
 
 .primary_ribbon.bookmarked {
-	background: url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/bookmark-1.png") no-repeat;
+	background: url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/bookmark-1.png") no-repeat;
 	width: 50px;
 	height: 50px;
 	background-size: 45px;
 }
 
 .primary_ribbon.bookmarked:hover {
-	background: url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/bookmark-3.png") no-repeat;
+	background: url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/bookmark-3.png") no-repeat;
 	width: 50px;
 	height: 50px;
 	background-size: 45px;
@@ -13943,7 +13943,7 @@ a .hl-dot-3 {
 }
 
 .halim--notice {
-	background: #224361 url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/warning.png") no-repeat;
+	background: #224361 url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/warning.png") no-repeat;
 	background-position: 8px 40%;
 	padding: 15px;
 	padding-left: 50px;
@@ -13954,7 +13954,7 @@ a .hl-dot-3 {
 }
 
 .halim-film-notice {
-	background: #fbecd8 url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/warning.png") no-repeat;
+	background: #fbecd8 url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/warning.png") no-repeat;
 	background-position: 8px 40%;
 	padding: 15px;
 	padding-left: 50px;
@@ -13964,7 +13964,7 @@ a .hl-dot-3 {
 }
 
 .halim_showtime_movies {
-	background: #22466b url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/weekly-calendar.png") no-repeat;
+	background: #22466b url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/weekly-calendar.png") no-repeat;
 	background-position: 10px 42%;
 	background-size: 25px;
 	padding: 10px 15px;
@@ -14151,7 +14151,7 @@ a .hl-dot-3 {
 
 .halim-ajax-popular-post-loading,
 .halim-ajax-get-post-loading {
-	background: rgba(21, 29, 37, .78) url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/ajax-loader.gif") no-repeat 95% 2%;
+	background: rgba(21, 29, 37, .78) url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/ajax-loader.gif") no-repeat 95% 2%;
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -15581,7 +15581,7 @@ th {
 
 .halim_showtime_movies {
 	background-color: #232323;
-	background-image: url("//hhkungfu.ee/wp-content/themes/videohazz/assets/images/weekly-calendar.png");
+	background-image: url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/weekly-calendar.png");
 	background-repeat: no-repeat;
 	background-position: 10px center;
 	background-size: 25px;

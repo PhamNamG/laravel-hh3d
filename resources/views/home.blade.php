@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Hhkungfu - Xem Phim Hoạt Hình 3D Trung Quốc Vietsub Miễn Phí')
+@section('title', 'Hhkungffu - Xem Phim Hoạt Hình 3D Trung Quốc Vietsub Miễn Phí')
 
-@section('meta_description', 'Xem phim hoạt hình 3D Trung Quốc mới nhất, chất lượng cao Full HD. Cập nhật liên tục phim hoạt hình Trung Quốc hay nhất, xem phim online miễn phí tại Hhkungfu.')
+@section('meta_description', 'Xem phim hoạt hình 3D Trung Quốc mới nhất, chất lượng cao Full HD. Cập nhật liên tục phim hoạt hình Trung Quốc hay nhất, xem phim online miễn phí tại Hhkungffu.')
 
 @section('meta_keywords', 'phim hoạt hình 3D, phim hoạt hình Trung Quốc, xem phim online, phim 3D vietsub, phim hoạt hình miễn phí, phim Trung Quốc mới nhất')
 
 @section('canonical_url', url('/'))
 
 @section('og_type', 'website')
-@section('og_title', 'Hhkungfu - Xem Phim Hoạt Hình 3D Trung Quốc')
+@section('og_title', 'Hhkungffu - Xem Phim Hoạt Hình 3D Trung Quốc')
 @section('og_description', 'Kho phim hoạt hình 3D Trung Quốc phong phú, cập nhật liên tục. Xem miễn phí, chất lượng cao.')
 @section('og_url', url('/'))
 
@@ -18,7 +18,7 @@
 	{
 		"@context": "https://schema.org",
 		"@type": "WebSite",
-		"name": "Hhkungfu",
+		"name": "Hhkungffu",
 		"url": "{{ url('/') }}",
 		"description": "Xem phim hoạt hình 3D Trung Quốc miễn phí",
 		"potentialAction": {
