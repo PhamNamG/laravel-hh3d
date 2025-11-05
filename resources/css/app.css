@@ -12675,7 +12675,7 @@ a .hl-dot-3 {
 	border-radius: 20px !important;
 	transition: .7s all;
 	padding: 10px 40px;
-	background: #12171b6e url("//Hhkungffu.ee/wp-content/themes/videohazz/assets/images/search.svg") 5px 2px no-repeat;
+	background: #12171b6e url("/public/svg/search.svg") 5px 2px no-repeat;
 }
 
 .halim-search-form .form-control:focus {

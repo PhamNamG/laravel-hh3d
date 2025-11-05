@@ -11,7 +11,7 @@
                             <div class="form-group">
                                 <div class="input-group col-xs-12"> 
                                     <input id="search" type="text" name="q" value="{{ request('q') }}" class="form-control" data-toggle="tooltip" data-placement="bottom" data-original-title="Nhấn Enter để tìm kiếm" placeholder="Tìm kiếm phim..." autocomplete="off" required=""> 
-                                    <i id="search-spinner" class="fa-solid fa-spinner hidden animate-spin"></i>
+                                   <i class="fa-solid fa-spinner hidden animate-spin"></i>
                                 </div>
                             </div>
                         </form>
